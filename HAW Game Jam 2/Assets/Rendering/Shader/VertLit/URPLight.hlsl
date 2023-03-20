@@ -67,8 +67,10 @@ void GetAdditionalLightCelShaded(real3 wsp, real3 objectWSP, real3 viewDir, real
 
       real3 lightT = light.color * lightOBJ.distanceAttenuation * AdditionalLightRealtimeShadow(i, wsp, light.direction);
       
-        diff += dot(light.direction, normal) * saturate(lightT);
-        specular += step(.5f, Specular(light.direction, viewDir, normal, smoothness)) * saturate(lightT);
+        real n = saturate(dot(light.direction, normal));
+        n = smoothstep(.4f, .6f, n);
+        diff +=  n * (lightT);
+        specular += step(.5f, Specular(light.direction, viewDir, normal, smoothness)) * (lightT);
     }
     diff = clamp(diff, 0, 999.99f);
 }

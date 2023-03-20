@@ -48,7 +48,7 @@ real4 GetLight(v2f i)
 
     //v calculate later used variables
     real3 wsn = normalize(i.normalWS);
-    real3 wsp = i.wsp;
+    real3 wsp = TransformObjectToWorld(float3(0.0f, 0.0f, 0.0f));
 
     //v get Light Information
     GetMainLight(wsp, wsn, i.viewDir, _Smoothness, _Metallic, mainLightColor, mainLightDiffuse, mainLightSpecular);
@@ -65,13 +65,14 @@ real4 GetLight(v2f i)
     real3 environmentalReflection = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, refDir, 3 - (_Smoothness * 2)) * _Smoothness;
 
     //v apply main light lighting
+    mainLightDiffuse = smoothstep(.4f, .6f, mainLightDiffuse);
     result = saturate((mainLightDiffuse * albedo) + (ambient + environmentalReflection));
     result += (mainLightSpecular * _Smoothness) + ambient;
 
     //v apply local lights
     real3 additionalLightColor, additionalLightSpecular;
 
-    GetAdditionalLight(wsp, i.viewDir, i.normalWS, _Smoothness,
+    GetAdditionalLightCelShaded(i.wsp, wsp, i.viewDir, i.normalWS, _Smoothness,
     additionalLightColor, additionalLightSpecular);
 
     result += additionalLightColor;

@@ -12,7 +12,7 @@ namespace Plum.Rendering.URP{
         public void Init(RTHandle handle, Material mat){
             colorHandle = handle;
             renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
-            intermediateHandle = RTHandles.Alloc("_MainTex", name: "_MainTex");
+            intermediateHandle = RTHandles.Alloc(mat.name, name: mat.name);
             this.mat = mat;
             ConfigVariablesInit(this.mat);
         }
@@ -75,6 +75,7 @@ namespace Plum.Rendering.URP{
             PreCreate();
             if (refShader == null) return;
             heldMat = CoreUtils.CreateEngineMaterial(refShader);
+            heldMat.name = typeof(T).Name;
             m_ScriptablePass = new T();
         }
 
