@@ -12,7 +12,6 @@ namespace Music.Player
         private void Start()
         {
             refCam = Camera.main;
-            Debug.Log(refCam.gameObject.name);
         }
 
         //https://docs.unity3d.com/ScriptReference/Plane.Raycast.html

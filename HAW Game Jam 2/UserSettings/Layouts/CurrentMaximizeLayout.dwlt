@@ -231,9 +231,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a8c50000
-      m_LastClickedID: 50600
-      m_ExpandedIDs: 12acffff54adffffc4b2ffff96b3ffff76b5ffff98c500009cc50000a8c50000
+      m_SelectedIDs: bc6b0000
+      m_LastClickedID: 27580
+      m_ExpandedIDs: 34fbffffaa6b0000bc6b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 1
+      displayed: 0
       snapOffset: {x: 0, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -542,13 +542,13 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.00000047683716, y: 5.7196255, z: 1}
+    m_Target: {x: 1.9845974, y: 0.6899365, z: 0.31608438}
     speed: 2
-    m_Value: {x: -0.00000047683716, y: 5.7196255, z: 1}
+    m_Value: {x: 1.9845974, y: 0.6899365, z: 0.31608438}
   m_RenderMode: 0
   m_CameraMode:
-    drawMode: 0
-    name: Shaded
+    drawMode: 2
+    name: Shaded Wireframe
     section: Shading Mode
   m_ValidateTrueMetals: 0
   m_DoValidateTrueMetals: 0
@@ -590,13 +590,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.08185473, y: -0.718157, z: 0.085728094, w: 0.6857124}
+    m_Target: {x: -0.35900953, y: -0.052307814, z: 0.020160524, w: -0.9316567}
     speed: 2
-    m_Value: {x: -0.08185473, y: 0.718157, z: -0.085728094, w: -0.68571234}
+    m_Value: {x: -0.3590069, y: -0.052307434, z: 0.020160377, w: -0.9316499}
   m_Size:
-    m_Target: 12.124355
+    m_Target: 48.753822
     speed: 2
-    m_Value: 12.124355
+    m_Value: 48.753822
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -689,22 +689,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Rendering
+    - Assets/dev
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Rendering
+  - Assets/dev
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Games per Engine\Unity\Music Game\HAW Game Jam 2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a6c40000
-    m_LastClickedID: 50342
-    m_ExpandedIDs: 00000000a2c4000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 11}
+    m_SelectedIDs: 6c770000
+    m_LastClickedID: 30572
+    m_ExpandedIDs: 00000000146c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -732,7 +732,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a2c4000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000146c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -757,8 +757,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: a8c50000
-    m_LastClickedInstanceID: 50600
+    m_SelectedInstanceIDs: bc6b0000
+    m_LastClickedInstanceID: 27580
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -835,8 +835,8 @@ MonoBehaviour:
     y: 0
     width: 340.5
     height: 820
-  m_MinSize: {x: 276, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 13}
@@ -878,7 +878,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 26240
+  m_LastInspectedObjectInstanceID: 12974
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -920,7 +920,7 @@ MonoBehaviour:
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 1194
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
