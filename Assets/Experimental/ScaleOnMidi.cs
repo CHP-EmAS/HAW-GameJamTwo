@@ -8,7 +8,6 @@ using Melanchall.DryWetMidi.Multimedia;
 public class ScaleOnMidi : MonoBehaviour
 {
     [SerializeField] private string midiDirectory;
-    [SerializeField] private MidiPlayer reference;
     [SerializeField] private AudioSource source;
     private Vector3 initialScale, targetScale;
     private void Start(){
