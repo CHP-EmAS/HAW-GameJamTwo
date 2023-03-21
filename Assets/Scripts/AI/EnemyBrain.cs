@@ -17,28 +17,32 @@ namespace Music.Combat
             agent.SetDestination(point);
         }
 
-        private void Evaluate()
+        private bool Evaluate()
         {
             List<GameObject> selection = perceptor.CheckSphere();
+            bool didSee = false;
             foreach(GameObject seen in selection)
             {
                 if (seen.gameObject.CompareTag(playerTag)){
                     ChangeToWander(seen.gameObject.transform.position);
+                    didSee = true;
                 }
             }
+            return didSee;
         }
 
         private float evaluateTimer = 0.0f;
-        private void DoEvaluate()
+        private bool DoEvaluate()
         {
-            if(evaluateTimer > 0)
+            if(evaluateTimer >= 0)
             {
                 evaluateTimer -= Time.deltaTime;
+                return true;
             }
             else
             {
-                Evaluate();
                 evaluateTimer = tickTime;
+                return Evaluate();
             }
         }
 
@@ -50,11 +54,17 @@ namespace Music.Combat
 
         protected override void Stent_Idle()
         {
-            
+            GoTo(perceptor.GetRandomPatrolPoint());
         }
 
+        private const float minPointThreshhold = 1.0f;
         protected override void Stupt_Idle()
         {
+            if(Vector3.Distance(transform.position, agent.destination) <= minPointThreshhold)
+            {
+                Debug.Log("SHould update");
+                GoTo(perceptor.GetRandomPatrolPoint());
+            }
             DoEvaluate();
         }
 
@@ -69,7 +79,9 @@ namespace Music.Combat
 
         protected override void Stupt_Wander()
         {
-            DoEvaluate();
+            if(!DoEvaluate()){
+                ChangeState(AIState.IDLE);
+            }
         }
 
         protected override void Stext_Wander()
