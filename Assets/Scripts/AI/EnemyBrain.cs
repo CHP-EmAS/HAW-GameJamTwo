@@ -54,6 +54,7 @@ namespace Music.Combat
 
         protected override void Stent_Idle()
         {
+            agent.speed = 1.0f;
             GoTo(perceptor.GetRandomPatrolPoint());
         }
 
@@ -62,7 +63,6 @@ namespace Music.Combat
         {
             if(Vector3.Distance(transform.position, agent.destination) <= minPointThreshhold)
             {
-                Debug.Log("SHould update");
                 GoTo(perceptor.GetRandomPatrolPoint());
             }
             DoEvaluate();
@@ -75,6 +75,7 @@ namespace Music.Combat
 
         protected override void Stent_Wander()
         {
+            agent.speed = 3.5f;
         }
 
         protected override void Stupt_Wander()

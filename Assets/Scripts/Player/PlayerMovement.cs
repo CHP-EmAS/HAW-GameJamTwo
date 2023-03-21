@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Music.Player
 {
-    public class PlayerMovement : MonoBehaviour, IMoveable
+    public class PlayerMovement : Plum.Base.Singleton<PlayerMovement>, IMoveable
     {
         private const float shakeCooldown = 1.0f;
         private const float momentumDecrease = .05f;
