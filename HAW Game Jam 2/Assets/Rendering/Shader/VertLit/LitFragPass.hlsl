@@ -58,10 +58,18 @@ real4 Lit(v2f i)
     //https://www.bitshiftprogrammer.com/2018/11/reflection-probe-custom-shader-tutorial.html
     real3 refDir = reflect(-i.viewDir, i.normalWS);
     real3 environmentalReflection = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, refDir, 3 - (_Smoothness * 2)) * _Smoothness;
-
+    real mlDiffRaw = mainLightDiffuse;
     //v apply main light lighting
-    result = saturate((mainLightDiffuse * albedo) + (ambient + environmentalReflection));
-    result += (mainLightSpecular * _Smoothness) + ambient;
+    mainLightDiffuse = smoothstep(.4f, .6f, mainLightDiffuse);
+    mainLightDiffuse = lerp(.4f, 1.0f, mainLightDiffuse);
+    real3 lowerColor = 0;
+    SH_RGB2HSV(albedo, lowerColor);
+    lowerColor.r -= .2f;
+    lowerColor.g += .2f;
+    lowerColor.b *= .5f;
+    SH_HSV2RGB(lowerColor, lowerColor);
+    result = lerp(lowerColor, albedo, mainLightDiffuse) + (ambient + environmentalReflection);
+    result += (mainLightSpecular * _Smoothness);
 
     //v apply local lights
     real3 additionalLightColor, additionalLightSpecular;
@@ -72,11 +80,17 @@ real4 Lit(v2f i)
     result += additionalLightColor;
     result += additionalLightSpecular;
 
-    return real4(result, 1);
+    float fres = 0;
+    Fresnel(-i.viewDir, i.normalWS, 5, fres);
+    fres = step(.1f, fres);
+    fres *= saturate(mlDiffRaw);
+    result = lerp(result, mainLightColor.xyz * 2, fres);
+
+    return real4(result, 1.0f);
 }
 real4 LitFrag(v2f i)
 {
-    return i.lit * tex2D(_MainTex, i.uv);
+    return Lit(i);
 }
 
 

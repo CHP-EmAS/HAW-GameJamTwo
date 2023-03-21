@@ -42,7 +42,7 @@ real _Smoothness;
 real _Metallic;
 real4 GetLight(v2f i)
 {
-            //v declare all core variables
+    //v declare all core variables
     real mainLightDiffuse, mainLightSpecular;
     real3 mainLightColor;
 
@@ -66,8 +66,15 @@ real4 GetLight(v2f i)
 
     //v apply main light lighting
     mainLightDiffuse = smoothstep(.4f, .6f, mainLightDiffuse);
-    result = saturate((mainLightDiffuse * albedo) + (ambient + environmentalReflection));
-    result += (mainLightSpecular * _Smoothness) + ambient;
+    mainLightDiffuse = lerp(.4f, 1.0f, mainLightDiffuse);
+    real3 lowerColor = 0;
+    SH_RGB2HSV(albedo, lowerColor);
+    lowerColor.r -= .2f;
+    lowerColor.g += .2f;
+    lowerColor.b *= .5f;
+    SH_HSV2RGB(lowerColor, lowerColor);
+    result = lerp(lowerColor, albedo, mainLightDiffuse) + (ambient + environmentalReflection);
+    result += (mainLightSpecular * _Smoothness);
 
     //v apply local lights
     real3 additionalLightColor, additionalLightSpecular;

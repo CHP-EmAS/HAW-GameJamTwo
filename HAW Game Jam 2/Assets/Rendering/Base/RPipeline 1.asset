@@ -61,10 +61,10 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
+  m_RenderingMode: 1
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 1
-  m_AccurateGbufferNormals: 0
+  m_AccurateGbufferNormals: 1
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 0
@@ -85,16 +85,16 @@ MonoBehaviour:
   values:
     mode: 0
     useCorrectedDepth: 0
-    finalIntensity: 0.5
-    sobelColor: {r: 0.254717, g: 0, b: 0.016748644, a: 0}
-    sobelExtrusion: 0.5
+    finalIntensity: 0.572
+    sobelColor: {r: 0.1981132, g: 0.043272134, b: 0, a: 0}
+    sobelExtrusion: 1
     noiseExtrusion: 0.1
     sobelSmoothness: 0
     noiseLUT: {fileID: 0}
     noiseRange: 0
     edgeDepth: 0.001
-    edgeNormal: 1
+    edgeNormal: 4
     edgeAlbedo: 1
     depthT: 1
     normalT: 0.5
-    albedoT: 0.1
+    albedoT: 1
