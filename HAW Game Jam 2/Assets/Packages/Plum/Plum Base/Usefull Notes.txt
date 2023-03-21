@@ -1,7 +1,0 @@
-Scriptable Object: 
-[CreateAssetMenu(fileName = "NAME", menuName = "PATH0/PATH1", order = 0)]
-
-Game-Initializer key: "Assets/Prefabs/Dependencies.prefab"
-
-Many associated Packages rely on the 'InputHandler' class :)
-InputHandler is a partial class which allows for custom implementation of methods!
