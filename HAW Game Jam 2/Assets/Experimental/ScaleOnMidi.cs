@@ -13,7 +13,11 @@ public class ScaleOnMidi : MonoBehaviour
     private Vector3 initialScale, targetScale;
     private void Start(){
         initialScale = transform.localScale;
-        MidiPlayer.PlayLooping(midiDirectory, OnNote, this, 1.0f);
+        MidiPlaySettings settings = new MidiPlaySettings();
+        settings.directory = midiDirectory;
+        settings.eventHandler = OnNote;
+        settings.parrallelSource = source;
+        MidiPlayer.PlayLooping(settings);
         source.Play();
     }
     private void Update(){
@@ -21,7 +25,6 @@ public class ScaleOnMidi : MonoBehaviour
         transform.localScale = targetScale;
     }
     private void OnNote(object sender, NotesEventArgs args){
-        Debug.Log("Shall");
         targetScale += initialScale * .2f;
     }
 }
