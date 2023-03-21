@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Music.Player
 {
+    //NEEDED: Angle-Limit
     public class MouseRotator : MonoBehaviour
     {
         private const float maxRotDegrees = 45.0f;
@@ -18,7 +19,7 @@ namespace Music.Player
         }
 
         //https://docs.unity3d.com/ScriptReference/Plane.Raycast.html
-        private void Update()
+        private void FixedUpdate()
         {
             Plane plane = new Plane(Vector3.up, toRotate.position);
             Ray r = refCam.ScreenPointToRay(Input.mousePosition);
