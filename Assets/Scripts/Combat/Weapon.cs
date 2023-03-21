@@ -9,9 +9,9 @@ namespace Music.Combat
 
         private bool shot = false;
 
-        private void Awake()
+        private void Awake() 
         {
-           
+           Metronome.SubscribeOnMethod(0, OnNote);
         }
 
         private void Update()
@@ -21,7 +21,7 @@ namespace Music.Combat
 
         private void OnNote()
         {
-            if (shot)
+            if(shot)
             {
                 SpawnProjectile();
             }

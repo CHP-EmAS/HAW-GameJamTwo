@@ -5,24 +5,11 @@ namespace Music.Instrument
 {
     public class Kick : InstrumentBase
     {
-        public Kick()
-        {
-            
-        }
         
-        private void Awake()
-        {
-            
-        }
-
-        private void OnNote()
-        {
-            
-        }
-
         public override void OnSubscribe()
         {
             Projectile.OnCollision += ExecuteExplosion;
+            Projectile.OnTrack += ExecuteWave;
         }
 
         public override void OnRelease()
@@ -33,6 +20,14 @@ namespace Music.Instrument
         private void ExecuteExplosion(Projectile projectile)
         {
             projectile.Explode();
+        }
+        
+        private void ExecuteWave(Projectile projectile, InstrumentType type)
+        {
+            if (type == InstrumentType.Kick)
+            {
+                projectile.Wave();
+            }
         }
     }
 }

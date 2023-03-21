@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Music.Instrument;
 using UnityEngine;
 using Plum.Midi;
 
@@ -14,9 +15,9 @@ namespace Music
             public Utility.ArgumentelessDelegate onHit;
         }
         public MidiTrack[] tracks;
-        public static void SubscribeOnMethod(int index, Utility.ArgumentelessDelegate del)
+        public static void SubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
         {
-            Instance.tracks[index].onHit += del;
+            Instance.tracks[(int)type].onHit += del;
         }
 
         private void Start()
