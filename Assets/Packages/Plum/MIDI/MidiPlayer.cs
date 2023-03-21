@@ -6,10 +6,38 @@ using Melanchall.DryWetMidi.Multimedia;
 
 namespace Plum.Midi{
     public delegate void OnNote(object sender, NotesEventArgs args);
+    public class MidiPlaySettings
+    {
+        public string directory;
+        public OnNote eventHandler;
+        public MonoBehaviour coroutineParent;
+        public float speed = 1.0f;
+        public AudioSource parrallelSource;
+        public AudioClip parrallelMusic;
+    }
 
     //v this class represents a singleton midi player
     public class MidiPlayer : MonoBehaviour
     {
+        private class SubscribedSource
+        {
+            public AudioSource source;
+            public AudioClip clip;
+            public void Play()
+            {
+                Debug.Log("upper clip is working" + "  " + source);
+                if (clip != null) source.clip = clip;
+                source.Stop();
+                source.Play();
+                Debug.Log("Should replay" + " " + clip);
+            }
+            public SubscribedSource(AudioSource source, Playback playback, AudioClip clip = null)
+            {
+                this.source = source;
+                this.clip = clip;
+            }
+        }
+
         private static List<Playback> allPlayBacks = new List<Playback>();
         private static MidiPlayer instance;
         public static MidiPlayer Instance{get => instance;}
@@ -28,9 +56,9 @@ namespace Plum.Midi{
             CreateTickGeneratorCallback = () => new RegularPrecisionTickGenerator()}}
             );
         }
-        private static void ConfigPlayBack(Playback playback, float speed, OnNote eventHandler){
-            playback.Speed = speed;
-            playback.NotesPlaybackStarted += (sender, e) => eventHandler?.Invoke(sender, e);
+        private static void ConfigPlayBack(Playback playback, MidiPlaySettings settings){
+            if(settings.speed >= 0) playback.Speed = settings.speed;
+            playback.NotesPlaybackStarted += (sender, e) => settings.eventHandler?.Invoke(sender, e);
             playback.InterruptNotesOnStop = true;
             allPlayBacks.Add(playback);
         }
@@ -38,35 +66,35 @@ namespace Plum.Midi{
 
 #region PLAYBACK
         //Play a midi sequence once
-        public static void PlaySingle(string midiDirectory, OnNote eventHandler, 
-        MonoBehaviour coroutineParent = null, float speed = 1.0f){
+        public static void PlaySingle(MidiPlaySettings settings){
             Playback p = null;
-            PlaySingle(midiDirectory, eventHandler, ref p, coroutineParent, speed);
+            PlaySingle(settings, ref p);
         }
-        public static void PlaySingle(string midiDirectory, OnNote eventHandler, ref Playback playback, MonoBehaviour coroutineParent = null, float speed = 1.0f){
-            MidiFile midiF = MidiFile.Read(midiDirectory);
+        public static void PlaySingle(MidiPlaySettings settings, ref Playback playback){
+            MidiFile midiF = MidiFile.Read(settings.directory);
             playback = GetPlayback(midiF);
-            ConfigPlayBack(playback, speed, eventHandler);
+            ConfigPlayBack(playback, settings);
 
-            if(coroutineParent == null) coroutineParent = instance;
-            coroutineParent.StartCoroutine(PlayMusic(playback));
+            if(settings.coroutineParent == null) settings.coroutineParent = instance;
+            settings.coroutineParent.StartCoroutine(PlayMusic(playback));
         }
 
         //v use this to play looping midi files
-        public static void PlayLooping(string midiDirectory, OnNote eventHandler, MonoBehaviour coroutineParent = null, float speed = 1.0f){
+        public static void PlayLooping(MidiPlaySettings settings){
             Playback p = null;
-            PlayLooping(midiDirectory, eventHandler, ref p, coroutineParent, speed);
+            PlayLooping(settings, ref p);
         }
 
-        public static void PlayLooping(string midiDirectory, OnNote eventHandler, ref Playback playback, MonoBehaviour coroutineParent = null, float speed = 1.0f){
-            MidiFile midiF = MidiFile.Read(midiDirectory);
+        public static void PlayLooping(MidiPlaySettings settings, ref Playback playback){
+            MidiFile midiF = MidiFile.Read(settings.directory);
             playback = GetPlayback(midiF);
-            ConfigPlayBack(playback, speed, eventHandler);
-            playback.Loop = true;
+            //playback.Loop = true;
+            ConfigPlayBack(playback, settings);
 
-            if(coroutineParent == null) coroutineParent = instance;
+            if(settings.coroutineParent == null) settings.coroutineParent = instance;
             allPlayBacks.Add(playback);
-            coroutineParent.StartCoroutine(PlayMusicLooped(playback));
+            SubscribedSource sSource = new SubscribedSource(settings.parrallelSource, playback, settings.parrallelMusic);
+            settings.coroutineParent.StartCoroutine(PlayMusicLooped(playback, sSource));
         }
 
         //v use this to stop all current loops in this instance
@@ -88,17 +116,17 @@ namespace Plum.Midi{
 #endregion //!PLAYBACK
 
 #region COROUTINES
-        private static IEnumerator PlayMusicLooped(Playback p){
+        private static IEnumerator PlayMusicLooped(Playback p, SubscribedSource source = null){
             p.Start();
             while(p.IsRunning){
                 yield return new WaitForEndOfFrame();
             }
-            p.Dispose();
+            yield return PlayMusicLooped(p, source);
         }
 
         private static IEnumerator PlayMusic(Playback p){
             p.Start();
-            while(p.IsRunning){
+            while (p.IsRunning){
                 yield return new WaitForEndOfFrame();
             }
             allPlayBacks.Remove(p);

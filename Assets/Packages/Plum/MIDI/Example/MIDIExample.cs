@@ -8,10 +8,13 @@ namespace Plum.Midi{
         [SerializeField] private string midiDirectory = "Assets/MIDI/Example/Example.mid";
         [SerializeField] private bool playLoop = false;
         private void Start(){
+            MidiPlaySettings settings = new MidiPlaySettings();
+            settings.directory = midiDirectory;
+            settings.eventHandler = OnNotePlayed;
             if(playLoop){
-                MidiPlayer.PlayLooping(midiDirectory, OnNotePlayed);
+                MidiPlayer.PlayLooping(settings);
             } else{
-                MidiPlayer.PlaySingle(midiDirectory, OnNotePlayed);
+                MidiPlayer.PlaySingle(settings);
             }
         }
         private void OnNotePlayed(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args){

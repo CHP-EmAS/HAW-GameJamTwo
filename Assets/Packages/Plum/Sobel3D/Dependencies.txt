@@ -1,0 +1,2 @@
+Required:
+Blit (Plum URP default >2022.2)
