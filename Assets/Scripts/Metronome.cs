@@ -19,6 +19,11 @@ namespace Music
         {
             Instance.tracks[(int)type].onHit += del;
         }
+        
+        public static void UnsubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
+        {
+            Instance.tracks[(int)type].onHit -= del;
+        }
 
         private void Start()
         {

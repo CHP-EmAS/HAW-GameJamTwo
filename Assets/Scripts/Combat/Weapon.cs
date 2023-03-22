@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Music.Combat
 {
@@ -7,11 +8,18 @@ namespace Music.Combat
     {
         [SerializeField] private GameObject m_projectile;
 
+        private ObjectPool<Projectile> _projectilePool;
+
         private bool shot = false;
 
         private void Awake() 
         {
            Metronome.SubscribeOnMethod(0, OnNote);
+        }
+
+        private void Start()
+        {
+           _projectilePool = new ObjectPool<Projectile>()
         }
 
         private void Update()
