@@ -17,12 +17,20 @@ namespace Music
         public MidiTrack[] tracks;
         public static void SubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
         {
-            Instance.tracks[(int)type].onHit += del;
+            Debug.Log(type);
+            
+            if (Instance.tracks.Length > (int) type)
+            {
+                Instance.tracks[(int)type].onHit += del;
+            }
         }
         
         public static void UnsubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
         {
-            Instance.tracks[(int)type].onHit -= del;
+            if (Instance.tracks.Length > (int) type)
+            {
+                Instance.tracks[(int)type].onHit -= del;
+            }
         }
 
         private void Start()

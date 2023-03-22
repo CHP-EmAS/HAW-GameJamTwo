@@ -6,9 +6,13 @@ namespace Music.Combat
 {
     public struct ProjectileInitSettings
     {
-        
+        public Action<Projectile> ReleaseAction;
+        public Transform SpawnTransform;
+        public float Speed;
+        public float LifeSpan;
     }
-    
+  
+    [RequireComponent(typeof(Rigidbody))]
     public class Projectile : MonoBehaviour
     {
         public static ProjectileDelegate OnCollision;
@@ -17,36 +21,49 @@ namespace Music.Combat
         public delegate void ProjectileDelegate(Projectile instance);
         public delegate void TrackDelegate(Projectile instance, InstrumentType type);
 
+        private Rigidbody _rigidbody;
+        
+        private Action<Projectile> _releaseAction;
         private float _speed;
+        private float _lifeSpan;
         private Vector3 _direction;
 
-        private void Initialize()
+        public void Initialize(ProjectileInitSettings settings)
         {
-            gameObject.SetActive(true);
+            _releaseAction = settings.ReleaseAction;
+            
+            transform.position = settings.SpawnTransform.position;
+            transform.rotation = settings.SpawnTransform.rotation;
+
+            _lifeSpan = settings.LifeSpan;
+            _speed = settings.Speed;
             
             Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
-            Metronome.SubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            Metronome.SubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            //Metronome.SubscribeOnMethod(InstrumentType.Piano, OnPiano);
+            //Metronome.SubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            
+            gameObject.SetActive(true);
         }
         
-        private void Release()
+        public void Release()
         {
             gameObject.SetActive(false);
             
             Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            //Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
+            //dwwdsMetronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
         }
-        
-        private void Destroy()
+
+        private void Awake()
         {
-            gameObject.SetActive(false);
-            
-            Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            _rigidbody = GetComponent<Rigidbody>();
         }
-        
+
+        private void Start()
+        {
+            _rigidbody.AddForce(_rigidbody.transform.forward * _speed);
+        }
+
         public void OnTriggerEnter(Collider other)
         {
             OnCollision?.Invoke(this);
@@ -54,7 +71,7 @@ namespace Music.Combat
 
         public void Explode()
         {
-            
+            _releaseAction(this);
         }
         
         public void Wave()
@@ -75,6 +92,11 @@ namespace Music.Combat
         private void OnFlute()
         {
             OnTrack(this, InstrumentType.Flute);
+        }
+
+        private void OnDestroy()
+        {
+            Release();
         }
     }
 }
