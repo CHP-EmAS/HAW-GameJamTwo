@@ -29,8 +29,8 @@ namespace Music.Player
                 Vector3 hitPoint = r.GetPoint(e);
                 Vector3 nFWD = (hitPoint - toRotate.position).normalized;
 
-                toRotate.forward = Vector3.SmoothDamp(toRotate.forward, nFWD, ref rfv0, smoothness);
-                head.forward = Vector3.SmoothDamp(head.forward, Vector3.Normalize(nFWD + new Vector3(0.0f, 0.3f, 0.0f)), ref rfv2, smoothness * 2);
+                toRotate.forward = Vector3.SmoothDamp(toRotate.forward, nFWD, ref rfv0, 0);
+                head.forward = Vector3.SmoothDamp(head.forward, Vector3.Normalize(nFWD + new Vector3(0.0f, 0.3f, 0.0f)), ref rfv2, smoothness);
             }
 
             float angle = Vector3.Angle(toAfterRotate.forward, toRotate.forward);

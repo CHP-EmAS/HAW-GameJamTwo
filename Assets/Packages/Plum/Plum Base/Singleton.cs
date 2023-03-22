@@ -14,9 +14,15 @@ namespace Plum.Base
             }
         }
 
+        protected T GetInstanceSafe()
+        {
+            if (instance == null) instance = this;
+            return instance as T;
+        }
+
         protected virtual void Awake()
         {
-            if(instance != null){
+            if(instance != null && instance != this){
                 Debug.Log("Tried to set a singleton instance of type: " + typeof(T) + " <- trying to be assigned at" + gameObject + " but the instance is already set to " + instance);
                 return;
             }

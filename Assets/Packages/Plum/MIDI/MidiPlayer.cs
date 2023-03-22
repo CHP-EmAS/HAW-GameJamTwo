@@ -10,7 +10,7 @@ namespace Plum.Midi
     public class MidiPlaySettings
     {
         public string directory;
-        public OnNote eventHandler;
+        public System.EventHandler<NotesEventArgs> eventHandler;
         public MonoBehaviour coroutineParent;
         public float speed = 1.0f;
         public AudioSource parrallelSource;
@@ -24,8 +24,15 @@ namespace Plum.Midi
         {
             public AudioSource source;
             public AudioClip clip;
+
+            public void Stop()
+            {
+                if (source == null) return;
+                source.Stop();
+            }
             public void Play()
             {
+                if (source == null) return;
                 if (clip != null) source.clip = clip;
                 source.Stop();
                 source.Play();
@@ -66,7 +73,7 @@ namespace Plum.Midi
         private static void ConfigPlayBack(Playback playback, MidiPlaySettings settings)
         {
             if (settings.speed >= 0) playback.Speed = settings.speed;
-            playback.NotesPlaybackStarted += (sender, e) => settings.eventHandler?.Invoke(sender, e);
+            playback.NotesPlaybackStarted += settings.eventHandler;
             playback.InterruptNotesOnStop = true;
             allPlayBacks.Add(playback);
         }
@@ -134,6 +141,7 @@ namespace Plum.Midi
         private static IEnumerator PlayMusicLooped(Playback p, SubscribedSource source = null)
         {
             p.Start();
+            source.Stop();
             source.Play();
             while (p.IsRunning)
             {

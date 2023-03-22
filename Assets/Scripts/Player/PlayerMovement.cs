@@ -7,8 +7,8 @@ namespace Music.Player
     public class PlayerMovement : Plum.Base.Singleton<PlayerMovement>, IMoveable
     {
         private const float shakeCooldown = 1.0f;
-        private const float momentumDecrease = .05f;
-        private const float dashIntensity = 3.0f;
+        private const float momentumDecrease = .5f;
+        private const float dashIntensity = 10.0f;
 
         private float shakeTimer = 0.0f;
         [SerializeField] private Rigidbody refBody;
@@ -41,9 +41,12 @@ namespace Music.Player
         {
             Move(targetDir);
         }
+
+        private Vector3 lastVelocity;
         public void Move(Vector3 dir)
         {
-            refBody.velocity = Vector3.SmoothDamp(refBody.velocity, dir * speed, ref rfv0, smoothness) + momentum;
+            lastVelocity = Vector3.SmoothDamp(lastVelocity, dir * speed, ref rfv0, smoothness);
+            refBody.velocity = lastVelocity + momentum;
             momentum = Vector3.SmoothDamp(momentum, Vector3.zero, ref rfv1, momentumDecrease);
         }
         public void AddForce(Vector3 dir)
