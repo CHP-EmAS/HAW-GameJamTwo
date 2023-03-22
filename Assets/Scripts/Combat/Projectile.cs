@@ -38,6 +38,15 @@ namespace Music.Combat
             Metronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
         }
         
+        private void Destroy()
+        {
+            gameObject.SetActive(false);
+            
+            Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
+        }
+        
         public void OnTriggerEnter(Collider other)
         {
             OnCollision?.Invoke(this);

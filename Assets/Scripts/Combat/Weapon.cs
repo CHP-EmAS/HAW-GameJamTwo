@@ -19,7 +19,7 @@ namespace Music.Combat
 
         private void Start()
         {
-           _projectilePool = new ObjectPool<Projectile>()
+           
         }
 
         private void Update()
