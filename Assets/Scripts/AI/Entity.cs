@@ -16,10 +16,11 @@ namespace Music
         }
         public override void Damage(int recievedDamage, IDamageDealer damageDealer)
         {
+            Plum.Base.TimeManager.HoldFrame(.1f, .05f);
             Vector3 tarPos = damageDealer.GetAttached().transform.position;
             tarPos.y = 0.0f;
             Vector3 dir = new Vector3(transform.position.x, 0.0f, transform.position.y) - tarPos;
-            moveable.AddForce(dir.normalized * 5);
+            moveable.AddForce(dir.normalized * 2);
             base.Damage(recievedDamage, damageDealer);
         }
         public override void Death(IDamageDealer source)

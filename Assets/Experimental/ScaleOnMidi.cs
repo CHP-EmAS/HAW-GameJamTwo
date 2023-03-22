@@ -17,7 +17,6 @@ public class ScaleOnMidi : MonoBehaviour
         settings.eventHandler = OnNote;
         settings.parrallelSource = source;
         MidiPlayer.PlayLooping(settings);
-        source.Play();
     }
     private void Update(){
         targetScale = Vector3.Lerp(targetScale, initialScale, 5 * Time.deltaTime);
