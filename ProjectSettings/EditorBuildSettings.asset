@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Leos Devroom.unity
+    guid: cbadd5715c895f345a20186c4cd4568b
   m_configObjects: {}

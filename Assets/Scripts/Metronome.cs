@@ -1,52 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Music.Instrument;
 using UnityEngine;
 using Plum.Midi;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Multimedia;
 
 namespace Music
 {
     public class Metronome : Plum.Base.Singleton<Metronome>
     {
         [System.Serializable]
-        public struct MidiTrack
+        public class MidiTrack
         {
             public string directory;
             public Utility.ArgumentelessDelegate onHit;
+            public Playback playback;
         }
         public MidiTrack[] tracks;
-        public static void SubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
-        {
-            Debug.Log(type);
-            
+        public static void SubscribeOnMethod(InstrumentType type, EventHandler<NotesEventArgs> del)
+        {   
             if (Instance.tracks.Length > (int) type)
             {
-                Instance.tracks[(int)type].onHit += del;
+                Instance.tracks[(int)type].playback.NotesPlaybackStarted += (o, e) => del(o, e);
             }
         }
         
-        public static void UnsubscribeOnMethod(InstrumentType type, Utility.ArgumentelessDelegate del)
+        public static void UnsubscribeOnMethod(InstrumentType type, EventHandler<NotesEventArgs> del)
         {
             if (Instance.tracks.Length > (int) type)
             {
-                Instance.tracks[(int)type].onHit -= del;
+                Instance.tracks[(int)type].playback.NotesPlaybackStarted -= (o, e) => del(o, e);
             }
         }
 
-        private void Start()
+        [SerializeField] private AudioClip clip;
+        protected override void Awake()
         {
+            base.Awake();
+            StartMidi();
+        }
+
+
+        private void StartMidi(){
+            AudioSource source = GetComponent<AudioSource>();
             foreach(MidiTrack track in tracks)
             {
-                void LocalPlay(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
-                {
-                    track.onHit?.Invoke();
-                }
-
                 MidiPlaySettings settings = new MidiPlaySettings();
                 settings.directory = track.directory;
-                settings.eventHandler += LocalPlay;
+                if(source != null){
+                    settings.parrallelMusic = clip;
+                    settings.parrallelSource = source;
+                }
 
-                MidiPlayer.PlayLooping(settings);
+                MidiPlayer.PlayLooping(settings, ref track.playback);
             }
         }
 

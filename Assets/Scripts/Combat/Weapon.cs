@@ -62,7 +62,7 @@ namespace Music.Combat
             }
         }
 
-        private void OnNote()
+        private void OnNote(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
         {
             if(_shot)
             {

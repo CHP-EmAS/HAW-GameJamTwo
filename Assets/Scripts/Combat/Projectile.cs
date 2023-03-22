@@ -79,22 +79,22 @@ namespace Music.Combat
             
         }
 
-        private void OnKick()
+        private void OnKick(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
         {
             OnTrack(this, InstrumentType.Kick);
         }
         
-        private void OnPiano()
+        private void OnPiano(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
         {
             OnTrack(this, InstrumentType.Piano);
         }
         
-        private void OnFlute()
+        private void OnFlute(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
         {
             OnTrack(this, InstrumentType.Flute);
         }
 
-        private void OnDestroy()
+        private void OnDestroy(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
         {
             Release();
         }
