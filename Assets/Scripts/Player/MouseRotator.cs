@@ -34,9 +34,7 @@ namespace Music.Player
             }
 
             float angle = Vector3.Angle(toAfterRotate.forward, toRotate.forward);
-            if(angle >= maxRotDegrees){
-                lastTargetPosition = Vector3.SmoothDamp(lastTargetPosition, toAfterRotate.transform.position + toRotate.forward, ref rfv0, smoothness);
-            }
+            lastTargetPosition = Vector3.SmoothDamp(lastTargetPosition, toAfterRotate.transform.position + toRotate.forward, ref rfv0, smoothness);
             toAfterRotate.LookAt(lastTargetPosition + new Vector3(0, .05f, 0.0f), -Vector3.up);
         }
         private Vector3 rfv0, rfv1, rfv2;

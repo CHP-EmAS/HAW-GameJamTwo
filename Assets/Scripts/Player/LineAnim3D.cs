@@ -71,7 +71,6 @@ namespace Plum.DD
         private void Update()
         {
             if (mode == UpdateMode.UPDATE) UpdateLine(Time.deltaTime);
-            transforms[0].position = transform.position;
         }
 
         private void FixedUpdate()
@@ -85,14 +84,18 @@ namespace Plum.DD
             segments[0].position = transform.position;
             positions[0] = transform.position;
             transforms[0].position = transform.position;
+            transforms[0].up = transform.up;
 
             for (int i = 1; i < segments.Length; i++)
             {
-                Vector3 pos = segments[i - 1].position + (segments[i].position - segments[i - 1].position).normalized * maxDST;
+                Vector3 pos = segments[i - 1].position + Vector3.Lerp((segments[i].position - segments[i - 1].position).normalized, transforms[i - 1].up, .25f) * maxDST;
                 float maxDSTlcl = clampDST ? maxDST : -1;
                 positions[i] = segments[i].Move(ref movementCurve, pos + (gravity * gravityScale), segments[i - 1].position, maxDSTlcl, dt);
-                transforms[i].position = pos;
-                transforms[i].up = (transforms[i].position - transforms[i - 1].position).normalized;
+            
+                transforms[i].position = positions[i];
+                Vector3 nDir = (positions[i] - transforms[i - 1].position).normalized;
+                transforms[i].up = nDir;
+                float angle = Vector3.Angle(-nDir, transforms[i - 1].up);
             }
         }
     }
