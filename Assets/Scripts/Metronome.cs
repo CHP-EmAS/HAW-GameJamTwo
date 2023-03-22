@@ -44,6 +44,7 @@ namespace Music
 
 
         private void StartMidi(){
+            FindObjectOfType<MidiPlayer>().Init();
             AudioSource source = GetComponent<AudioSource>();
             foreach(MidiTrack track in tracks)
             {

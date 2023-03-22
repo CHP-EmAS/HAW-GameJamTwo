@@ -47,8 +47,9 @@ namespace Plum.Midi
         private static List<Playback> allPlayBacks = new List<Playback>();
         private static MidiPlayer instance;
         public static MidiPlayer Instance { get => instance; }
-        private void Awake()
-        {
+        private bool wasInit = false;
+        public void Init(){
+            if(wasInit) return;
             if (instance != null)
             {
                 Debug.LogError("Tried to create a second instance of the singleton 'Midiplayer'");
@@ -56,6 +57,11 @@ namespace Plum.Midi
                 return;
             }
             instance = this;
+            wasInit = true;
+        }
+        private void Awake()
+        {
+            Init();
         }
 
         #region UTILS
@@ -105,7 +111,8 @@ namespace Plum.Midi
 
         public static void PlayLooping(MidiPlaySettings settings, ref Playback playback)
         {
-            MidiFile midiF = MidiFile.Read(settings.directory);
+            string directory = Application.dataPath + "/StreamingAssets/" + settings.directory;
+            MidiFile midiF = MidiFile.Read(directory);
             playback = GetPlayback(midiF);
             //playback.Loop = true;
             ConfigPlayBack(playback, settings);
