@@ -6,7 +6,7 @@ namespace Plum.Damage
 {
     public class PlumDamageable : MonoBehaviour, IDamageable
     {
-        private const float damageCooldown = .5f;
+        private const float damageCooldown = .05f;
         private float currentDamageCooldown = 0;
         [SerializeField] private bool clampHealthOnDamage = false, clampHealthOnHeal = true, stopDamageOnDeath = true;
         [SerializeField] private int maxHealth = 100;

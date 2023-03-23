@@ -36,10 +36,6 @@ struct v2f
     real3 viewDir : TEXCOORD8;
 };
 
-real4 _BaseColor;
-real _Smoothness;
-real _Metallic;
-
 v2f CustomVert (appdata v)
 {
     v2f o;
@@ -48,7 +44,7 @@ v2f CustomVert (appdata v)
     o.wsp = TransformObjectToWorld(v.vertex);
 
     real3 posOBJ = v.vertex;
-    real wsL = length(o.wsp.xz) * .1f;
+    real wsL = length(o.wsp.xz);
     real t = sin(_Time.x * 20 + v.uv.y * 20 + wsL);
     posOBJ.y += t * .1f;
     t = cos(_Time.x * 20 + v.uv.y * 20 + wsL);

@@ -1,4 +1,4 @@
-Shader "Lit/Tail"
+Shader "Lit/VertLit"
 {
     //This Shader is the main opaque shader.
     Properties
@@ -10,41 +10,69 @@ Shader "Lit/Tail"
         _Metallic("Metallicness", Range(0, 1)) = 0
         _Fres("Fresnel", Range(0, 1)) = 0
     }
-    SubShader
-    {   
-
-        //Main
-        Pass
+        SubShader
         {
-            Tags{
-                "RenderType" = "Opaque" "
-                RenderPipeline" = "UniversalPipeline" 
-                "UniversalMaterialType" = "Lit" 
-                "IgnoreProjector" = "True" 
-                "ShaderModel"="4.5"
-                }
-            Blend SrcAlpha OneMinusSrcAlpha
-            Cull [_Cull]
-            ZTest LEqual
-            ZWrite On
+            //Shadowcaster
+            LOD 100
+            Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "UniversalMaterialType" = "Lit" "IgnoreProjector" = "True" "ShaderModel" = "4.5"}
+            Pass{
+                Tags{ "LightMode" = "ShadowCaster"}
+            }
+            Pass{//v shader needs to be marked for TextureRenderer
+                Tags{"LightMode" = "DepthOnly"}
+            }
+            //Gbuffer & Depth
+            Pass{
+                //Before rendering stuff, we need to up this material data into the GBuffer. Copied from Lit.shader
+                Tags{"LightMode" = "UniversalGBuffer"}
+                HLSLPROGRAM
+                #pragma exclude_renderers gles gles3 glcore
+                #pragma target 4.5
 
-            HLSLPROGRAM
+                #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+
+            #pragma vertex CustomVert
+                #pragma fragment LitGBufferPassFragment
+
+                #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+                #include "CustomVertLitTail.hlsl"
+                #include "Packages/com.unity.render-pipelines.universal/Shaders/LitGBufferPass.hlsl"
+                ENDHLSL
+            }
+
+            //Main
+            Pass
+            {
+                Tags{
+                    "RenderType" = "Opaque" "
+                    RenderPipeline" = "UniversalPipeline" 
+                    "UniversalMaterialType" = "Lit"
+                    "IgnoreProjector" = "True"
+                    "ShaderModel" = "4.5"
+                    }
+                Cull[_Cull]
+                ZTest LEqual
+                ZWrite On
+
+                HLSLPROGRAM
             #pragma vertex CustomVert
             #pragma fragment Frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"           
             //!Note: Fog does not work in this shader as of now
             //Shamelessly copy pasted from Shadergraph
-
+            real4 _BaseColor;
+real _Smoothness;
+real _Metallic;
             #include "CustomVertLitTail.hlsl"
             #include "LitFragPass.hlsl"
 
             real4 Frag(v2f i) : SV_Target
             {
-                return real4(LitFrag(i).xyz, .5f);
+                return LitFrag(i);
             }
 
             ENDHLSL
         }
-        
-    }
+
+        }
 }
