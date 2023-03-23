@@ -7,6 +7,8 @@ using Plum.Midi;
 
 public class Blink : MonoBehaviour
 {
+    private const int threshhold = 12;
+    private int counter;
     private Vector3 initialScale, targetScale;
     private void Start(){
         initialScale = transform.localScale;
@@ -17,6 +19,8 @@ public class Blink : MonoBehaviour
         transform.localScale = targetScale;
     }
     private void OnNote(object sender, NotesEventArgs args){
+        counter++;
+        if(counter % threshhold != 0) return;
         targetScale = new Vector3(initialScale.x, initialScale.y, 0.0f);
     }
 }

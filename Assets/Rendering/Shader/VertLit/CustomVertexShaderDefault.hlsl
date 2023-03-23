@@ -95,7 +95,7 @@ v2f CustomVert (appdata v)
     o.vertexOBJ = v.vertex;
     o.wsp = TransformObjectToWorld(v.vertex);
     o.vertex = TransformObjectToHClip(v.vertex);
-    o.uv = TRANSFORM_TEX(v.uv * _MainTex_ST.xy + _MainTex_ST.zw, _MainTex);
+    o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
     o.normal = v.normal;
     o.normalWS = Object2World(v.normal);
     o.viewDir = normalize(o.wsp - _WorldSpaceCameraPos);

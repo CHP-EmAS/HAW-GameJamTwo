@@ -46,7 +46,7 @@ namespace Music.Player
         public void Move(Vector3 dir)
         {
             lastVelocity = Vector3.SmoothDamp(lastVelocity, dir * speed, ref rfv0, smoothness);
-            refBody.velocity = lastVelocity + momentum;
+            refBody.velocity = lastVelocity + momentum + new Vector3(0.0f, Mathf.Sin(Time.time * .5f) * .1f, 0.0f);
             momentum = Vector3.SmoothDamp(momentum, Vector3.zero, ref rfv1, momentumDecrease);
         }
         public void AddForce(Vector3 dir)

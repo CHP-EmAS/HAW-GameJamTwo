@@ -34,7 +34,7 @@
 
 
 
-
+real _Fres;
 real4 Lit(v2f i)
 {
         //v declare all core variables
@@ -84,7 +84,7 @@ real4 Lit(v2f i)
     Fresnel(-i.viewDir, i.normalWS, 5, fres);
     fres = step(.1f, fres);
     fres *= saturate(mlDiffRaw);
-    result = lerp(result, mainLightColor.xyz * 2, fres);
+    result = lerp(result, mainLightColor.xyz * 2, fres * _Fres);
 
     return real4(result, 1.0f);
 }
