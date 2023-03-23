@@ -58,11 +58,11 @@ namespace Music.Combat
             _shot = Input.GetKey(KeyCode.Mouse0);
             if(_shot)
             {
-                SpawnProjectile();
+                //SpawnProjectile();
             }
         }
 
-        private void OnNote(object sender, Melanchall.DryWetMidi.Multimedia.NotesEventArgs args)
+        private void OnNote(float input)
         {
             if(_shot)
             {

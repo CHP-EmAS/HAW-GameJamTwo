@@ -24,8 +24,8 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: b2afdf1d7c54eaf4689a561d429d3716, type: 2}
     overrideMaterialPassIndex: 0
-    overrideDepthState: 0
-    depthCompareFunction: 4
+    overrideDepthState: 1
+    depthCompareFunction: 6
     enableWrite: 1
     stencilSettings:
       overrideStencilState: 0

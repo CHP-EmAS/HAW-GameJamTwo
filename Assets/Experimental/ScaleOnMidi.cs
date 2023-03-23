@@ -16,8 +16,7 @@ public class ScaleOnMidi : MonoBehaviour
         targetScale = Vector3.Lerp(targetScale, initialScale, 5 * Time.deltaTime);
         transform.localScale = targetScale;
     }
-    private void OnNote(object sender, NotesEventArgs args){
-        Debug.Log("Am doing");
-        targetScale += initialScale * .2f;
+    private void OnNote(float input){
+        targetScale = initialScale * 1.1f;
     }
 }

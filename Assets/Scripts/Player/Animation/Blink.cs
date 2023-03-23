@@ -18,7 +18,7 @@ public class Blink : MonoBehaviour
         targetScale = Vector3.Lerp(targetScale, initialScale, 5 * Time.deltaTime);
         transform.localScale = targetScale;
     }
-    private void OnNote(object sender, NotesEventArgs args){
+    private void OnNote(float input){
         counter++;
         if(counter % threshhold != 0) return;
         targetScale = new Vector3(initialScale.x, initialScale.y, 0.0f);
