@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Melanchall.DryWetMidi.Multimedia;
-using Plum.Midi;
 
 
 public class Blink : MonoBehaviour
