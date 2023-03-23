@@ -7,7 +7,8 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class DeathScreen : MonoBehaviour
-{
+{ 
+
     public void HoverOverButton(TMP_Text hoverButton)
     {
         hoverButton.fontStyle = FontStyles.Bold;
