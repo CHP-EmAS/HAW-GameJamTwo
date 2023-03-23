@@ -7,6 +7,7 @@ namespace Music
 {
     public class Entity : PlumDamageable
     {
+        [SerializeField] private bool useHoldFrame = true, useDamageFWD = false;
         private IMoveable moveable;
         protected override void Start()
         {
@@ -17,7 +18,13 @@ namespace Music
         public override void Damage(int recievedDamage, IDamageDealer damageDealer)
         {
             base.Damage(recievedDamage, damageDealer);
-            Plum.Base.TimeManager.HoldFrame(.01f, .01f);
+            if(useHoldFrame) Plum.Base.TimeManager.HoldFrame(.01f, .01f);
+
+            if (useDamageFWD)
+            {
+                moveable.AddForce(-damageDealer.GetAttached().transform.forward * (25.0f / (recievedDamage + .01f)));
+                return;
+            }
             Vector3 tarPos = damageDealer.GetAttached().transform.position;
             tarPos.y = 0.0f;
             Vector3 dir = new Vector3(transform.position.x, 0.0f, transform.position.z) - tarPos;

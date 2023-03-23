@@ -6,8 +6,16 @@ using Plum.AI;
 
 namespace Music.Combat
 {
-    public class EnemyBrain : AI_Brain
+    public class EnemyBrain : AI_Brain, IMoveable
     {
+        public void Move(Vector3 a)
+        {
+
+        }
+        public void AddForce(Vector3 v)
+        {
+            agent.velocity += v * .1f;
+        }
         private const float tickTime = .1f;
         private const string playerTag = "Player";
         [SerializeField] private NavMeshAgent agent;

@@ -1,32 +1,41 @@
 ﻿using System;
 using Music.Instrument;
 using UnityEngine;
+using Plum.Damage;
 
 namespace Music.Combat
 {
-    public struct ProjectileInitSettings
+    [System.Serializable]
+    public class ProjectileInitSettings
     {
         public Action<Projectile> ReleaseAction;
         public Transform SpawnTransform;
-        public float Speed;
-        public float LifeSpan;
+        public float Speed = 10.0f;
+        public float LifeSpan = 5.0f;
+        public int damage = 25;
+        public string damageTag = "Enemy";
     }
   
     [RequireComponent(typeof(Rigidbody))]
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, IDamageDealer
     {
+        public GameObject GetAttached() => gameObject;
+        [SerializeField] private LayerMask damageLayers;
         public static ProjectileDelegate OnCollision;
         public static TrackDelegate OnTrack;
         
         public delegate void ProjectileDelegate(Projectile instance);
         public delegate void TrackDelegate(Projectile instance, InstrumentType type);
 
+        private ProjectileInitSettings currentSettings;
         private Rigidbody _rigidbody;
         
         private Action<Projectile> _releaseAction;
         private float _speed;
         private float _lifeSpan;
         private Vector3 _direction;
+
+        private Vector3 lastPositionWS;
 
         public void Initialize(ProjectileInitSettings settings)
         {
@@ -37,6 +46,7 @@ namespace Music.Combat
 
             _lifeSpan = settings.LifeSpan;
             _speed = settings.Speed;
+            currentSettings = settings;
             
             Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
             //Metronome.SubscribeOnMethod(InstrumentType.Piano, OnPiano);
@@ -59,14 +69,52 @@ namespace Music.Combat
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        private void Start()
+        private void UpdateVelocity()
         {
-            _rigidbody.AddForce(_rigidbody.transform.forward * _speed);
+            _rigidbody.velocity = transform.forward * _speed;
+        }
+
+        protected virtual void OnDealt()
+        {
+            Release();
+        }
+
+        private void TryDamage(GameObject target)
+        {
+            if (target.CompareTag(currentSettings.damageTag))
+            {
+                IDamageable damage;
+                target.TryGetComponent<IDamageable>(out damage);
+                if(damage != null)
+                {
+                    damage.Damage(currentSettings.damage, this);
+                    OnDealt();
+                }
+            }
+        }
+
+        private void CheckDamageable()
+        {
+            if(Physics.Raycast(transform.position, lastPositionWS - transform.position, out RaycastHit hit, damageLayers))
+            {
+                if(hit.collider != null)
+                {
+                    TryDamage(hit.collider.gameObject);
+                }
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateVelocity();
+            CheckDamageable();
+            lastPositionWS = transform.position;
         }
 
         public void OnTriggerEnter(Collider other)
         {
             OnCollision?.Invoke(this);
+            TryDamage(other.gameObject);
         }
 
         public void Explode()

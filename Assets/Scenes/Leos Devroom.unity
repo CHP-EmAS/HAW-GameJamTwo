@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 2
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.6666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -724,7 +724,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae64c217908850046b0df5c7dee02c5b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874834170}
   m_SourcePrefab: {fileID: 100100000, guid: ae64c217908850046b0df5c7dee02c5b, type: 3}
 --- !u!4 &1865923568 stripped
 Transform:
@@ -752,7 +755,12 @@ MonoBehaviour:
   m_projectilePoolCollectionCheck: 1
   m_defaultProjectilePoolSize: 30
   m_maxProjectilePoolSize: 31
-  m_projectileSpawnTransform: {fileID: 1874834170}
+  settings:
+    SpawnTransform: {fileID: 1874834170}
+    Speed: 100
+    LifeSpan: 5
+    damage: 25
+    damageTag: Enemy
 --- !u!1 &1874834169
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,11 +785,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874834169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.9776826, y: 0.0076488024, z: 20.858921}
+  m_LocalScale: {x: 8.01284, y: 26.17155, z: 8.012837}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 830940037}
+  m_Father: {fileID: 1865923568}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3080629019846012760
@@ -1362,7 +1370,4 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8327480620004473871, guid: b67742a7f6e7ee949bf2d81ad51bb46a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1865923568}
-    - targetCorrespondingSourceObject: {fileID: 8327480620004473871, guid: b67742a7f6e7ee949bf2d81ad51bb46a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1874834170}
   m_SourcePrefab: {fileID: 100100000, guid: b67742a7f6e7ee949bf2d81ad51bb46a, type: 3}

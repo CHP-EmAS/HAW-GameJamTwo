@@ -48,9 +48,10 @@ v2f CustomVert (appdata v)
     o.wsp = TransformObjectToWorld(v.vertex);
 
     real3 posOBJ = v.vertex;
-    real t = sin(_Time.x * 20 + v.uv.y * 20);
+    real wsL = length(o.wsp.xz) * .1f;
+    real t = sin(_Time.x * 20 + v.uv.y * 20 + wsL);
     posOBJ.y += t * .1f;
-    t = cos(_Time.x * 20 + v.uv.y * 20);
+    t = cos(_Time.x * 20 + v.uv.y * 20 + wsL);
     posOBJ.x += t * .1f;
     o.vertex = TransformObjectToHClip(posOBJ);
 

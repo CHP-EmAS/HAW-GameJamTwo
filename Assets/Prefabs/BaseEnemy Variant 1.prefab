@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 928018188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7951326047963236431}
@@ -247,6 +247,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6248151023932557943, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6248151023932557942, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
@@ -329,6 +337,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba7ecb41c7774f4b922dae7c0766c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6812468378704754755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951326047963236430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d021813f196c0364abb8cce736682a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clampHealthOnDamage: 0
+  clampHealthOnHeal: 1
+  stopDamageOnDeath: 1
+  maxHealth: 100
 --- !u!4 &7951326047963236431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6248151023932557942, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
