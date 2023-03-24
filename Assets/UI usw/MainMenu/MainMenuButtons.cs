@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void StartGame()
     {
-        return;
+        SceneManager.LoadScene("Leos Devroom");
     }
 
     public void OpenSettings(TMP_Text buttonText)
