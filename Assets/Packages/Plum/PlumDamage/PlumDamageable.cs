@@ -9,7 +9,7 @@ namespace Plum.Damage
         private const float damageCooldown = .05f;
         private float currentDamageCooldown = 0;
         [SerializeField] private bool clampHealthOnDamage = false, clampHealthOnHeal = true, stopDamageOnDeath = true;
-        [SerializeField] private int maxHealth = 100;
+        [SerializeField] protected int maxHealth = 100;
         protected int health;
         public Utility.IntDelegate onDamageRecieved, onHealRecieved;
         public Utility.ArgumentelessDelegate onDeath, onReset;

@@ -7,17 +7,27 @@ namespace Music
 {
     public class Entity : PlumDamageable
     {
+        private const string damageT = "_damage_t";
+        [SerializeField] private ParticleSystem deathSystem;
         [SerializeField] private bool useHoldFrame = true, useDamageFWD = false, isPlayer = false;
+        private Material mat;
         private IMoveable moveable;
+        private Utility.ArgumentelessDelegate deathDelayed;
         protected override void Start()
-        {
+        {        
             base.Start();
             moveable = GetComponent<IMoveable>();
             if (moveable == null) moveable = GetComponentInChildren<IMoveable>();
+            mat = GetComponentInChildren<MeshRenderer>().material;
+            Metronome.SubscribeOnMethod(0, ExDeath);
         }
         public override void Damage(int recievedDamage, IDamageDealer damageDealer)
         {
             base.Damage(recievedDamage, damageDealer);
+            if(mat != null)
+            {
+                mat.SetFloat(damageT, (float)(health + .001f) / (float)(maxHealth + .001f));
+            }
             if(useHoldFrame) Plum.Base.TimeManager.HoldFrame(.01f, .01f);
 
             if (useDamageFWD)
@@ -32,6 +42,27 @@ namespace Music
         }
         public override void Death(IDamageDealer source)
         {
+            gameObject.SetActive(false);
+            deathDelayed = SubscribedDeath;
+        }
+
+        private void ExDeath(float i)
+        {
+            if(deathDelayed != null)
+            {
+                deathDelayed();
+                deathDelayed = null;
+            }
+        }
+        private void SubscribedDeath()
+        {
+            if (mat != null) mat.SetFloat(damageT, 0.0f);
+            if (deathSystem != null)
+            {
+                deathSystem.transform.parent = null;
+                deathSystem.Emit(30);
+                Debug.Log("should emit");
+            }
             if (isPlayer)
             {
                 Plum.Base.TimeManager.PauseGame();
@@ -42,7 +73,6 @@ namespace Music
                 GameLoop.enemyAmount--;
             }
             Music.Player.MainCam.RequestShake(1.5f, .3f);
-            gameObject.SetActive(false);
         }
     }
 }

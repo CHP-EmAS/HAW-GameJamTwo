@@ -50,7 +50,7 @@ real4 Lit(v2f i)
 
     //v all info is now stored in here
     real3 ambient = unity_AmbientSky.xyz;
-    real3 albedo = tex2D(_MainTex, i.uv) * _BaseColor; //<- starting at basic albedo
+    real3 albedo = tex2D(_MainTex, i.uv) * _BaseColor * i.color; //<- starting at basic albedo
 
     //v calculate dark-spots (we want them to be more saturated and with slight hue offset)
     real3 result;
