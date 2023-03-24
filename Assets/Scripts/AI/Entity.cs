@@ -7,7 +7,7 @@ namespace Music
 {
     public class Entity : PlumDamageable
     {
-        [SerializeField] private bool useHoldFrame = true, useDamageFWD = false;
+        [SerializeField] private bool useHoldFrame = true, useDamageFWD = false, isPlayer = false;
         private IMoveable moveable;
         protected override void Start()
         {
@@ -32,6 +32,11 @@ namespace Music
         }
         public override void Death(IDamageDealer source)
         {
+            if (isPlayer)
+            {
+                Plum.Base.TimeManager.PauseGame();
+                Music.UI.DeathScreen.Instance.gameObject.SetActive(true);
+            }
             gameObject.SetActive(false);
         }
     }

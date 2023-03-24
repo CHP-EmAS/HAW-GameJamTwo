@@ -4,29 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Plum.Base;
 using UnityEngine.SceneManagement;
 
-public class DeathScreen : MonoBehaviour
-{ 
-
-    public void HoverOverButton(TMP_Text hoverButton)
+namespace Music.UI
+{
+    public class DeathScreen : Singleton<DeathScreen>
     {
-        hoverButton.fontStyle = FontStyles.Bold;
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+        public void HoverOverButton(TMP_Text hoverButton)
+        {
+            hoverButton.fontStyle = FontStyles.Bold;
+        }
+
+        public void HoverExitButton(TMP_Text hoverButton)
+        {
+            hoverButton.fontStyle = FontStyles.Normal;
+        }
+
+        public void MenuButton()
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        public void PlayAgain()
+        {
+            Plum.Base.TimeManager.PauseOrContinue(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
-    public void HoverExitButton(TMP_Text hoverButton)
-    {
-        hoverButton.fontStyle = FontStyles.Normal;
-    }
-
-    public void MenuButton()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void PlayAgain()
-    {
-        //Spiel von vorne starten
-        return;
-    }
 }

@@ -42,8 +42,8 @@ namespace Plum.Base
             }
         }
 
-        public static void PauseOrContinue(bool pauseOrContinue){ //This should currently be only triggered through GameUIManager
-            if(pauseOrContinue) PauseGame();
+        public static void PauseOrContinue(bool pause){ //This should currently be only triggered through GameUIManager
+            if(pause) PauseGame();
             else ResumeGame();
         }
 

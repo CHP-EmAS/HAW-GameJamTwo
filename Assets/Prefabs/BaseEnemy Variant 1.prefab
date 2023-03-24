@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
       propertyPath: m_Radius
-      value: 1.41
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
       propertyPath: m_Center.y
@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 418861333347479023, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
@@ -352,6 +352,7 @@ MonoBehaviour:
   maxHealth: 100
   useHoldFrame: 1
   useDamageFWD: 0
+  isPlayer: 0
 --- !u!4 &7951326047963236431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6248151023932557942, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
