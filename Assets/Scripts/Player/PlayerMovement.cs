@@ -49,11 +49,11 @@ namespace Music.Player
             refBody.velocity = lastVelocity + momentum + new Vector3(0.0f, Mathf.Sin(Time.time * .5f) * .1f, 0.0f);
             momentum = Vector3.SmoothDamp(momentum, Vector3.zero, ref rfv1, momentumDecrease);
         }
-        public void AddForce(Vector3 dir)
+        public void AddForce(Vector3 dir, bool useShake = false)
         {
             const float dirRef = 10.0f;
             float magnitude = dir.magnitude / dirRef;
-            MainCam.RequestShake(1.0f * magnitude, 1.0f);
+            if(useShake) MainCam.RequestShake(1.0f * magnitude, 1.0f);
             momentum += dir;
             shakeTimer = shakeCooldown;
         }

@@ -75,7 +75,7 @@ namespace Music.Combat
             scaleFX.localScale = new Vector3(initialScale.x * 2, initialScale.y * .5f, initialScale.z * 2);
             Music.Player.MainCam.RequestShake(1.0f, 1.0f);
             Projectile projectile = _projectilePool.Get();
-            movement.AddForce(-settings.SpawnTransform.forward);
+            movement.AddForce(-settings.SpawnTransform.forward, false);
         }
 
         private void ReleaseProjectile(Projectile projectile)

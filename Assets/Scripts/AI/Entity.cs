@@ -41,6 +41,7 @@ namespace Music
             {
                 GameLoop.enemyAmount--;
             }
+            Music.Player.MainCam.RequestShake(1.5f, .3f);
             gameObject.SetActive(false);
         }
     }

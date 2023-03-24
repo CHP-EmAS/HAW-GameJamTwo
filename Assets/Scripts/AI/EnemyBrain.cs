@@ -12,7 +12,7 @@ namespace Music.Combat
         {
 
         }
-        public void AddForce(Vector3 v)
+        public void AddForce(Vector3 v, bool sh = false)
         {
             agent.velocity += v * .1f;
         }
