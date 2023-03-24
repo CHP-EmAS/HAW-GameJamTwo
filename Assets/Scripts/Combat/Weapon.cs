@@ -8,6 +8,7 @@ namespace Music.Combat
 {
     public class Weapon : MonoBehaviour
     {
+        [SerializeField] private AudioSource source;
         [SerializeField] private Music.Player.PlayerMovement movement;
         [SerializeField] private Projectile m_projectilePrefab;
         private ObjectPool<Projectile> _projectilePool;
@@ -72,6 +73,7 @@ namespace Music.Combat
 
         private void SpawnProjectile()
         {
+            source.Play();
             scaleFX.localScale = new Vector3(initialScale.x * 2, initialScale.y * .5f, initialScale.z * 2);
             Music.Player.MainCam.RequestShake(1.0f, 1.0f);
             Projectile projectile = _projectilePool.Get();

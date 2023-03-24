@@ -83,7 +83,7 @@ namespace Music.Combat
 
         protected override void Stent_Wander()
         {
-            agent.speed = 3.5f;
+            agent.speed = 5.0f;
         }
 
         protected override void Stupt_Wander()

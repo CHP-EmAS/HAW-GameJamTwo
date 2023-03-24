@@ -14,7 +14,8 @@ namespace Plum.AI
         [SerializeField] private PhysicsSpace space;
         [SerializeField] private float maxPerceptionRange = 5, maxPatrolPointRange = 1;
         [SerializeField, Range(0, 360)] private float viewDegrees = 0;
-        [SerializeField] private List<Component> ignoreColliders = new List<Component>();
+        [SerializeField] private List<GameObject> ignoreColliders = new List<GameObject>();
+        [SerializeField] private List<string> ignoreTags;
         [SerializeField] private LayerMask viewLayers, groundLayers;
 
         private List<GameObject> visibleObjects = new List<GameObject>();
@@ -38,7 +39,7 @@ namespace Plum.AI
             foreach(Component c in colliders)
             {
                 //if it should be ignored we can just ignore
-                if (ignoreColliders.Contains(c))
+                if (ignoreColliders.Contains(c.gameObject) || ignoreTags.Contains(c.tag))
                 {
                     continue;
                 }

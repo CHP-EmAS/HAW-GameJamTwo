@@ -10,6 +10,7 @@ namespace Music
         private const string damageT = "_damage_t";
         [SerializeField] private ParticleSystem deathSystem;
         [SerializeField] private bool useHoldFrame = true, useDamageFWD = false, isPlayer = false;
+        [SerializeField] private AudioSource hurtSource, deathSource;
         private Material mat;
         private IMoveable moveable;
         private Utility.ArgumentelessDelegate deathDelayed;
@@ -29,6 +30,10 @@ namespace Music
                 mat.SetFloat(damageT, (float)(health + .001f) / (float)(maxHealth + .001f));
             }
             if(useHoldFrame) Plum.Base.TimeManager.HoldFrame(.01f, .01f);
+            if(hurtSource != null) {
+                //deathDelayed += delegate{hurtSource.Play();};
+            }
+            if(deathSystem != null) deathSystem.Emit(5);
 
             if (useDamageFWD)
             {
@@ -42,7 +47,7 @@ namespace Music
         }
         public override void Death(IDamageDealer source)
         {
-            gameObject.SetActive(false);
+            if (mat != null) mat.SetFloat(damageT, 2.0f);
             deathDelayed = SubscribedDeath;
         }
 
@@ -56,12 +61,11 @@ namespace Music
         }
         private void SubscribedDeath()
         {
-            if (mat != null) mat.SetFloat(damageT, 0.0f);
+            gameObject.SetActive(false);
             if (deathSystem != null)
             {
                 deathSystem.transform.parent = null;
                 deathSystem.Emit(30);
-                Debug.Log("should emit");
             }
             if (isPlayer)
             {
@@ -73,6 +77,9 @@ namespace Music
                 GameLoop.enemyAmount--;
             }
             Music.Player.MainCam.RequestShake(1.5f, .3f);
+            if(deathSource != null){
+                deathSource.Play();
+            }
         }
     }
 }
