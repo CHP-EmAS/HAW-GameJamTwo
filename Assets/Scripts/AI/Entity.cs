@@ -37,6 +37,10 @@ namespace Music
                 Plum.Base.TimeManager.PauseGame();
                 Music.UI.DeathScreen.Instance.gameObject.SetActive(true);
             }
+            else
+            {
+                GameLoop.enemyAmount--;
+            }
             gameObject.SetActive(false);
         }
     }

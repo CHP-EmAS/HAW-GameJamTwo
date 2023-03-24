@@ -6,11 +6,13 @@ namespace Music
 {
     public class ScaleOnMidi : MonoBehaviour
     {
+        [SerializeField] private bool scale0End;
         [SerializeField] private int track = 0;
         private Vector3 initialScale, targetScale;
         private void Start()
         {
             initialScale = transform.localScale;
+            if (scale0End) transform.localScale = Vector3.zero;
             Metronome.SubscribeOnMethod((Instrument.InstrumentType)track, OnNote);
         }
         private void Update()
