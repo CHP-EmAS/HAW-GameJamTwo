@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 928018189}
   - component: {fileID: 928018192}
   - component: {fileID: 928018191}
-  - component: {fileID: 928018190}
   - component: {fileID: 7272851998204638965}
   m_Layer: 6
   m_Name: Sphere
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928018188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &928018190
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928018188}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7272851998204638965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf98f5f09bee8a45a580b53bf39f0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  track: 0
 --- !u!1 &1315546198
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,10 +239,19 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
+      propertyPath: m_Radius
+      value: 1.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
+      propertyPath: m_Center.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828342315725074543, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 418861333347479023, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6248151023932557942, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}
       insertIndex: -1
@@ -292,7 +288,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.74
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -325,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf98f5f09bee8a45a580b53bf39f0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  track: 0
 --- !u!114 &6312035594746129349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +350,8 @@ MonoBehaviour:
   clampHealthOnHeal: 1
   stopDamageOnDeath: 1
   maxHealth: 100
+  useHoldFrame: 1
+  useDamageFWD: 0
 --- !u!4 &7951326047963236431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6248151023932557942, guid: bd3b2365bcc14b347901d8720d5172d0, type: 3}

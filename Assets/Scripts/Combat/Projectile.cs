@@ -20,7 +20,8 @@ namespace Music.Combat
     public class Projectile : MonoBehaviour, IDamageDealer
     {
         public GameObject GetAttached() => gameObject;
-        [SerializeField] private LayerMask damageLayers;
+        [SerializeField] private float checkDST = 2.0f;
+        [SerializeField] private LayerMask damageLayers, damageNGround;
         public static ProjectileDelegate OnCollision;
         public static TrackDelegate OnTrack;
         
@@ -53,6 +54,7 @@ namespace Music.Combat
             //Metronome.SubscribeOnMethod(InstrumentType.Flute, OnFlute);
             
             gameObject.SetActive(true);
+            lastPositionWS = transform.position;
         }
         
         public void Release()
@@ -67,6 +69,7 @@ namespace Music.Combat
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            lastPositionWS = transform.position;
         }
 
         private void UpdateVelocity()
@@ -79,7 +82,7 @@ namespace Music.Combat
             Release();
         }
 
-        private void TryDamage(GameObject target)
+        private void TryDamage(GameObject target, bool disableOnNot = false)
         {
             if (target.CompareTag(currentSettings.damageTag))
             {
@@ -90,31 +93,46 @@ namespace Music.Combat
                     damage.Damage(currentSettings.damage, this);
                     OnDealt();
                 }
+            } else{
+                if(disableOnNot) {
+                    OnDealt();
+                }
             }
         }
 
         private void CheckDamageable()
         {
-            if(Physics.Raycast(transform.position, lastPositionWS - transform.position, out RaycastHit hit, damageLayers))
+            if(Physics.Raycast(transform.position, lastPositionWS - transform.position, out RaycastHit hit, (lastPositionWS - transform.position).magnitude, damageNGround))
             {
                 if(hit.collider != null)
                 {
-                    TryDamage(hit.collider.gameObject);
+                    TryDamage(hit.collider.gameObject, true);
                 }
             }
         }
+
+        private void CheckDamageableSphere(){
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, checkDST, Vector3.forward, checkDST, damageLayers);
+            if(hits.Length != 0)
+            {
+                foreach (RaycastHit hit in hits)
+                {
+                    if(hit.collider != null)
+                    {
+                        TryDamage(hit.collider.gameObject);
+                    }
+                }
+
+            }
+        }
+
 
         private void FixedUpdate()
         {
             UpdateVelocity();
             CheckDamageable();
+            CheckDamageableSphere();
             lastPositionWS = transform.position;
-        }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            OnCollision?.Invoke(this);
-            TryDamage(other.gameObject);
         }
 
         public void Explode()
@@ -141,10 +159,9 @@ namespace Music.Combat
         {
             OnTrack?.Invoke(this, InstrumentType.Flute);
         }
-
-        private void OnDestroy(float input)
-        {
-            Release();
+        private void OnDrawGizmos(){
+            Gizmos.color = new Color(1.0f, 0.0f, 0.0f, .2f);
+            Gizmos.DrawSphere(transform.position, checkDST);
         }
     }
 }
