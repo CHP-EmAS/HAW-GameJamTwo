@@ -502,7 +502,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b1d0bd23ffb93e41ba27631be35ffcb, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -677,6 +677,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1595723849, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f3e6153bedd77ea4194d7e412183997e, type: 3}
+    - target: {fileID: 1595723850, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
+      propertyPath: logType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595723850, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
+      propertyPath: threshhold
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 969144602645004357, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

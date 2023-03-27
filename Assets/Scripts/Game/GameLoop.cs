@@ -9,7 +9,7 @@ namespace Music
         private const int maxEnemies = 30;
         [SerializeField] private BoxCollider ground;
         [SerializeField] private GameObject enemyPrefab;
-        private float enemytickRate = 5;
+        private float enemytickRate = 2;
         public static int enemyAmount;
         private float enemyTimer;
         private void Start()

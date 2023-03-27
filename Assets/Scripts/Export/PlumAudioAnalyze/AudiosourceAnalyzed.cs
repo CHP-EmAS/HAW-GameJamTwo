@@ -29,6 +29,7 @@ namespace Plum.Audio
         [SerializeField] private LogType logType = LogType.NONE;
         [SerializeField] private Mode mode;
         [SerializeField, Range(0, .1f)] private float eventTimer = 0.0f; 
+        [SerializeField] private bool useAbsouluteValue = false;
         public OnNoteEvent events;
         private const int spectrumAmount = 64;
         private AudioSource source;
@@ -91,6 +92,7 @@ namespace Plum.Audio
                     compare *= 100;
                     break;
             }
+            if(useAbsouluteValue) compare = Mathf.Abs(compare);
             lastValue = v;
             if (logType == LogType.ALWAYS)
             {

@@ -7,6 +7,7 @@ namespace Music
 {
     public class Entity : PlumDamageable
     {
+        public static Utility.ArgumentelessDelegate onEnemyDeath;
         private const string damageT = "_damage_t";
         [SerializeField] private ParticleSystem deathSystem;
         [SerializeField] private bool useHoldFrame = true, useDamageFWD = false, isPlayer = false;
@@ -74,6 +75,7 @@ namespace Music
             }
             else
             {
+                onEnemyDeath?.Invoke();
                 GameLoop.enemyAmount--;
             }
             Music.Player.MainCam.RequestShake(1.5f, .3f);
