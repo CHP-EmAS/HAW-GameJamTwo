@@ -8,6 +8,21 @@ namespace Music.Combat
 {
     public class EnemyBrain : AI_Brain, IMoveable
     {
+        private float currentSpeed = 1.0f;
+        private float speedMul = 1.0f;
+        public void SetSpeedIncreased(){
+            speedMul = 2.0f;
+            agent.speed = currentSpeed * speedMul;
+        }
+        public void SetSpeedDecreased(){
+            speedMul = .5f;
+            agent.speed = currentSpeed * speedMul;
+        }
+        public void SetSpeedNormal(){
+            speedMul = 1.0f;
+            agent.speed = currentSpeed * speedMul;
+        }
+
         public void Move(Vector3 a)
         {
 
@@ -63,6 +78,7 @@ namespace Music.Combat
         protected override void Stent_Idle()
         {
             agent.speed = 1.0f;
+            currentSpeed = agent.speed;
             GoTo(perceptor.GetRandomPatrolPoint());
         }
 
@@ -84,6 +100,7 @@ namespace Music.Combat
         protected override void Stent_Wander()
         {
             agent.speed = 5.0f;
+            currentSpeed = agent.speed;
         }
 
         protected override void Stupt_Wander()

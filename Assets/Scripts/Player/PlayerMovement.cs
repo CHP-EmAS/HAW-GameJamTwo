@@ -6,6 +6,16 @@ namespace Music.Player
 {
     public class PlayerMovement : Plum.Base.Singleton<PlayerMovement>, IMoveable
     {
+        private float speedMul = 1.0f;
+        public void SetSpeedIncreased(){
+            speedMul = 2.0f;
+        }
+        public void SetSpeedDecreased(){
+            speedMul = .5f;
+        }
+        public void SetSpeedNormal(){
+            speedMul = 1.0f;
+        }
         private const float shakeCooldown = 1.0f;
         private const float momentumDecrease = .5f;
         private const float dashIntensity = 10.0f;
@@ -45,7 +55,7 @@ namespace Music.Player
         private Vector3 lastVelocity;
         public void Move(Vector3 dir)
         {
-            lastVelocity = Vector3.SmoothDamp(lastVelocity, dir * speed, ref rfv0, smoothness);
+            lastVelocity = Vector3.SmoothDamp(lastVelocity, dir * speed * speedMul, ref rfv0, smoothness);
             refBody.velocity = lastVelocity + momentum + new Vector3(0.0f, Mathf.Sin(Time.time * .5f) * .1f, 0.0f);
             momentum = Vector3.SmoothDamp(momentum, Vector3.zero, ref rfv1, momentumDecrease);
         }
