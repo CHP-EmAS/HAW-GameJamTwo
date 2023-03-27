@@ -8,12 +8,17 @@ namespace Music.Instrument
         
         public override void OnSubscribe()
         {
-           
+            Metronome.SubscribeOnMethod(InstrumentType.Snare, OnSnare);
         }
 
         public override void OnRelease()
         {
-           
+            Metronome.UnsubscribeOnMethod(InstrumentType.Snare, OnSnare);
+        }
+        
+        public void OnSnare(float diff)
+        {
+            
         }
     }
 }

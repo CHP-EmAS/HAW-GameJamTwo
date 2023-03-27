@@ -8,14 +8,17 @@ namespace Music.Instrument
         
         public override void OnSubscribe()
         {
-            
+            Metronome.SubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
         }
 
         public override void OnRelease()
         {
-            
+            Metronome.UnsubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
         }
 
-        
+        public void OnMainSynth(float diff)
+        {
+            
+        }
     }
 }

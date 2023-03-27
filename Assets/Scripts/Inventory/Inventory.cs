@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Music.Instrument;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Music.Inventory
 {
@@ -19,6 +21,8 @@ namespace Music.Inventory
         
         private const int MaxPickedInstruments = 3;
         private List<InstrumentType> _pickedInstruments;
+
+        private const int DropInstrumentPercentage = 10;
         
         private List<InstrumentType> _unpickedInstruments = new List<InstrumentType>() {
             InstrumentType.Snare, 
@@ -28,7 +32,12 @@ namespace Music.Inventory
             InstrumentType.MainSynth, 
             InstrumentType.ThinkBreak
         };
-        
+
+        private void Start()
+        {
+            Entity.onEnemyDeath += OnEnemyDeath;
+        }
+
         public void CollectNextInstrument()
         {
             InstrumentType randomUnusedInstrument = GetRandomUnusedInstrument();
@@ -62,6 +71,15 @@ namespace Music.Inventory
                 InstrumentType randomInstrument = _pickedInstruments[randomIndex];
                 m_availableInstruments[randomInstrument].OnRelease();
                 _pickedInstruments.RemoveAt(randomIndex);
+            }
+        }
+
+        private void OnEnemyDeath()
+        {
+            int dropItem = _random.Next(100);
+            if (dropItem < DropInstrumentPercentage)
+            {
+                CollectNextInstrument();
             }
         }
     }

@@ -8,10 +8,15 @@ namespace Music.Instrument
         
         public override void OnSubscribe()
         {
-            
+            Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
         }
 
         public override void OnRelease()
+        {
+            Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
+        }
+        
+        public void OnKick(float diff)
         {
             
         }
