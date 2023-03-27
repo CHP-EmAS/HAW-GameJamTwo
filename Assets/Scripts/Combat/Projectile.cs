@@ -50,8 +50,12 @@ namespace Music.Combat
             currentSettings = settings;
             
             Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
-            //Metronome.SubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            //Metronome.SubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            Metronome.SubscribeOnMethod(InstrumentType.Snare, OnSnare);
+            Metronome.SubscribeOnMethod(InstrumentType.Hihats, OnHihats);
+            Metronome.SubscribeOnMethod(InstrumentType.Bass, OnBass);
+            Metronome.SubscribeOnMethod(InstrumentType.Arpeggio, OnArpeggio);
+            Metronome.SubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
+            Metronome.SubscribeOnMethod(InstrumentType.ThinkBreak, OnThinkBreak);
             
             gameObject.SetActive(true);
             lastPositionWS = transform.position;
@@ -62,8 +66,12 @@ namespace Music.Combat
             gameObject.SetActive(false);
             
             Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
-            //Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            //dwwdsMetronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Snare, OnSnare);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Hihats, OnHihats);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Bass, OnBass);
+            Metronome.UnsubscribeOnMethod(InstrumentType.Arpeggio, OnArpeggio);
+            Metronome.UnsubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
+            Metronome.UnsubscribeOnMethod(InstrumentType.ThinkBreak, OnThinkBreak);
         }
 
         private void Awake()
@@ -125,8 +133,7 @@ namespace Music.Combat
 
             }
         }
-
-
+        
         private void FixedUpdate()
         {
             UpdateVelocity();
@@ -145,20 +152,41 @@ namespace Music.Combat
             
         }
 
-        private void OnKick(float input)
+        private void OnKick(float diff)
         {
             OnTrack?.Invoke(this, InstrumentType.Kick);
         }
         
-        private void OnPiano(float input)
+        private void OnSnare(float diff)
         {
-            OnTrack?.Invoke(this, InstrumentType.Piano);
+            OnTrack?.Invoke(this, InstrumentType.Snare);
         }
         
-        private void OnFlute(float input)
+        private void OnHihats(float diff)
         {
-            OnTrack?.Invoke(this, InstrumentType.Flute);
+            OnTrack?.Invoke(this, InstrumentType.Hihats);
         }
+        
+        private void OnBass(float diff)
+        {
+            OnTrack?.Invoke(this, InstrumentType.Bass);
+        }
+        
+        private void OnArpeggio(float diff)
+        {
+            OnTrack?.Invoke(this, InstrumentType.Arpeggio);
+        }
+        
+        private void OnMainSynth(float diff)
+        {
+            OnTrack?.Invoke(this, InstrumentType.MainSynth);
+        }
+        
+        private void OnThinkBreak(float diff)
+        {
+            OnTrack?.Invoke(this, InstrumentType.ThinkBreak);
+        }
+        
         private void OnDrawGizmos(){
             Gizmos.color = new Color(1.0f, 0.0f, 0.0f, .2f);
             Gizmos.DrawSphere(transform.position, checkDST);

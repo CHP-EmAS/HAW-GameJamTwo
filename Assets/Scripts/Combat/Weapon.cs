@@ -13,8 +13,8 @@ namespace Music.Combat
         [SerializeField] private Projectile m_projectilePrefab;
         private ObjectPool<Projectile> _projectilePool;
         [SerializeField] private bool m_projectilePoolCollectionCheck = false;
-        [SerializeField] private int m_defaultProjectilePoolSize = 30;
-        [SerializeField] private int m_maxProjectilePoolSize = 1000;
+        [SerializeField] private int m_defaultProjectilePoolSize = 10;
+        [SerializeField] private int m_maxProjectilePoolSize = 100;
         [SerializeField] private ProjectileInitSettings settings;
         [SerializeField] private Transform scaleFX;
         private Vector3 initialScale;

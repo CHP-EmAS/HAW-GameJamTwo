@@ -28,7 +28,7 @@ namespace Music
         {
             if (Instance.sources.Length > (int) type)
             {
-                Instance.sources[(int)type].events += del;
+                Instance.sources[(int)type].events -= del;
                 Instance.sources[(int)type].UnMute();
             }
         }
