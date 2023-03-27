@@ -826,6 +826,10 @@ PrefabInstance:
       propertyPath: threshhold
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 969144602113790207, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 969144602645004357, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

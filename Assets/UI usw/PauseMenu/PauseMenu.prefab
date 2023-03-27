@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 4814895795419506688}
   - {fileID: 4340315129153743023}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -698,8 +698,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4340315128870138712}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Unpause
+        m_TargetAssemblyTypeName: Music.UI.PauseMenu, Assembly-CSharp
+        m_MethodName: SwitchPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
