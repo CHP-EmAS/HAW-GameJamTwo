@@ -11,6 +11,8 @@ namespace Music.UI
 {
     public class DeathScreen : Singleton<DeathScreen>
     {
+        [SerializeField] AudioSource RecordScratch;
+
         private void Start()
         {
             gameObject.SetActive(false);
@@ -18,6 +20,7 @@ namespace Music.UI
         public void HoverOverButton(TMP_Text hoverButton)
         {
             hoverButton.fontStyle = FontStyles.Bold;
+            RecordScratch.Play();
         }
 
         public void HoverExitButton(TMP_Text hoverButton)

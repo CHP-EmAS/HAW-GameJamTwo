@@ -12,6 +12,8 @@ namespace Music.UI
     public class PauseMenu : Plum.Base.Singleton<PauseMenu>
     {
         [SerializeField] private bool startPaused = false;
+        [SerializeField] AudioSource RecordScratch;
+
         private void Start()
         {
             paused = !startPaused;
@@ -38,6 +40,7 @@ namespace Music.UI
         public void HoverOverButton(TMP_Text hoverButton)
         {
             hoverButton.fontStyle = FontStyles.Bold;
+            RecordScratch.Play();
         }
 
         public void HoverExitButton(TMP_Text hoverButton)

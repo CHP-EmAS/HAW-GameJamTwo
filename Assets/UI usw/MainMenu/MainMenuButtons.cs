@@ -11,6 +11,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] GameObject MainPanel;
     [SerializeField] GameObject SettingsPanel;
     [SerializeField] GameObject CreditsPanel;
+    [SerializeField] AudioSource RecordScratch;
 
     private void Start()
     {
@@ -56,6 +57,7 @@ public class MainMenuButtons : MonoBehaviour
     public void HoverOverButton(TMP_Text hoverButton)
     {
         hoverButton.fontStyle = FontStyles.Bold;
+        RecordScratch.Play();
     }
 
     public void HoverExitButton(TMP_Text hoverButton)
