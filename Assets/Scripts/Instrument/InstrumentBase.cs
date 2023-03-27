@@ -6,6 +6,7 @@ namespace Music.Instrument
 {
     public enum InstrumentType : int
     {
+        Invalid = -1,
         Kick = 0,
         Snare = 1,
         Hihats = 2,

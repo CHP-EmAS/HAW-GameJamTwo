@@ -8,7 +8,7 @@ namespace Music.Instrument
         
         public override void OnSubscribe()
         {
-           
+            
         }
 
         public override void OnRelease()

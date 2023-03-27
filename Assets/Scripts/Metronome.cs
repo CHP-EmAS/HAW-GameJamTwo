@@ -20,8 +20,6 @@ namespace Music
                     Instance.sources[(int)type].Mute();
                 }
             }
-
-
         }
         
         public static void UnsubscribeOnMethod(InstrumentType type, OnNoteEvent del)

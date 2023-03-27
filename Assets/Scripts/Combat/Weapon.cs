@@ -57,10 +57,6 @@ namespace Music.Combat
         {
             scaleFX.localScale = Vector3.Lerp(scaleFX.localScale, initialScale, 5 * Time.deltaTime);
             _shot = Input.GetKey(KeyCode.Mouse0);
-            if(_shot)
-            {
-                //SpawnProjectile();
-            }
         }
 
         private void OnNote(float input)

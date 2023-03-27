@@ -48,15 +48,7 @@ namespace Music.Combat
             _lifeSpan = settings.LifeSpan;
             _speed = settings.Speed;
             currentSettings = settings;
-            
-            Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
-            Metronome.SubscribeOnMethod(InstrumentType.Snare, OnSnare);
-            Metronome.SubscribeOnMethod(InstrumentType.Hihats, OnHihats);
-            Metronome.SubscribeOnMethod(InstrumentType.Bass, OnBass);
-            Metronome.SubscribeOnMethod(InstrumentType.Arpeggio, OnArpeggio);
-            Metronome.SubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
-            Metronome.SubscribeOnMethod(InstrumentType.ThinkBreak, OnThinkBreak);
-            
+
             gameObject.SetActive(true);
             lastPositionWS = transform.position;
         }
@@ -64,14 +56,6 @@ namespace Music.Combat
         public void Release()
         {
             gameObject.SetActive(false);
-            
-            Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Snare, OnSnare);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Hihats, OnHihats);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Bass, OnBass);
-            Metronome.UnsubscribeOnMethod(InstrumentType.Arpeggio, OnArpeggio);
-            Metronome.UnsubscribeOnMethod(InstrumentType.MainSynth, OnMainSynth);
-            Metronome.UnsubscribeOnMethod(InstrumentType.ThinkBreak, OnThinkBreak);
         }
 
         private void Awake()
@@ -140,51 +124,6 @@ namespace Music.Combat
             CheckDamageable();
             CheckDamageableSphere();
             lastPositionWS = transform.position;
-        }
-
-        public void Explode()
-        {
-            _releaseAction(this);
-        }
-        
-        public void Wave()
-        {
-            
-        }
-
-        private void OnKick(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Kick);
-        }
-        
-        private void OnSnare(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Snare);
-        }
-        
-        private void OnHihats(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Hihats);
-        }
-        
-        private void OnBass(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Bass);
-        }
-        
-        private void OnArpeggio(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Arpeggio);
-        }
-        
-        private void OnMainSynth(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.MainSynth);
-        }
-        
-        private void OnThinkBreak(float diff)
-        {
-            OnTrack?.Invoke(this, InstrumentType.ThinkBreak);
         }
         
         private void OnDrawGizmos(){
