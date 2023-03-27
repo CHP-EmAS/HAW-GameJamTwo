@@ -6,6 +6,13 @@ namespace Music.Player
 {
     public class PlayerMovement : Plum.Base.Singleton<PlayerMovement>, IMoveable
     {
+        private static float speedMul = 1.0f;
+        public static void AddSpeed(float n){
+            speedMul += n;
+        }
+        public static void DecreaseSpeed(float n){
+            speedMul -= n;
+        }
         private const float shakeCooldown = 1.0f;
         private const float momentumDecrease = .5f;
         private const float dashIntensity = 10.0f;

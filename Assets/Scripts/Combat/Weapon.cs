@@ -6,7 +6,7 @@ using Plum.VFX;
 
 namespace Music.Combat
 {
-    public class Weapon : MonoBehaviour
+    public class Weapon : Plum.Base.Singleton<Weapon>
     {
         [SerializeField] private AudioSource source;
         [SerializeField] private Music.Player.PlayerMovement movement;
@@ -20,6 +20,14 @@ namespace Music.Combat
         private Vector3 initialScale;
         
         private bool _shot = false;
+
+        public void SubAdditional(InstrumentType type){
+            Metronome.SubscribeOnMethod(type, OnNote);
+        }
+
+        public void UnSubAdditional(InstrumentType type){
+            Metronome.UnsubscribeOnMethod(type, OnNote);
+        }
         
         private void Start()
         {

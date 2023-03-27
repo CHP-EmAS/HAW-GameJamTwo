@@ -8,26 +8,13 @@ namespace Music.Instrument
         
         public override void OnSubscribe()
         {
-            Projectile.OnCollision += ExecuteExplosion;
-            Projectile.OnTrack += ExecuteWave;
+            Weapon.Instance.SubAdditional(InstrumentType.Kick);
         }
 
         public override void OnRelease()
         {
-            Projectile.OnCollision -= ExecuteExplosion;
-        }
-
-        private void ExecuteExplosion(Projectile projectile)
-        {
-            projectile.Explode();
+            Weapon.Instance.UnSubAdditional(InstrumentType.Kick);
         }
         
-        private void ExecuteWave(Projectile projectile, InstrumentType type)
-        {
-            if (type == InstrumentType.Kick)
-            {
-                projectile.Wave();
-            }
-        }
     }
 }

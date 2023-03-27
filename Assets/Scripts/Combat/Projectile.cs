@@ -49,10 +49,6 @@ namespace Music.Combat
             _speed = settings.Speed;
             currentSettings = settings;
             
-            Metronome.SubscribeOnMethod(InstrumentType.Kick, OnKick);
-            //Metronome.SubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            //Metronome.SubscribeOnMethod(InstrumentType.Flute, OnFlute);
-            
             gameObject.SetActive(true);
             lastPositionWS = transform.position;
         }
@@ -60,10 +56,6 @@ namespace Music.Combat
         public void Release()
         {
             gameObject.SetActive(false);
-            
-            Metronome.UnsubscribeOnMethod(InstrumentType.Kick, OnKick);
-            //Metronome.UnsubscribeOnMethod(InstrumentType.Piano, OnPiano);
-            //dwwdsMetronome.UnsubscribeOnMethod(InstrumentType.Flute, OnFlute);
         }
 
         private void Awake()
@@ -145,20 +137,6 @@ namespace Music.Combat
             
         }
 
-        private void OnKick(float input)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Kick);
-        }
-        
-        private void OnPiano(float input)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Piano);
-        }
-        
-        private void OnFlute(float input)
-        {
-            OnTrack?.Invoke(this, InstrumentType.Flute);
-        }
         private void OnDrawGizmos(){
             Gizmos.color = new Color(1.0f, 0.0f, 0.0f, .2f);
             Gizmos.DrawSphere(transform.position, checkDST);

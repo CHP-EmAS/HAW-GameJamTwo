@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Plum.Audio
 {
@@ -12,7 +15,8 @@ namespace Plum.Audio
         {
             NONE = 0,
             ONEVENT = 1,
-            ALWAYS = 2
+            ONBACK = 2,
+            ALWAYS = 3
         }
 
         private enum Mode
@@ -25,21 +29,35 @@ namespace Plum.Audio
         }
 
         [SerializeField, Range(0, 62)] private int refIndex = 62;
-        [SerializeField] private float threshhold = 1f;
+        [HideInInspector] public float backThreshhold = .05f;
         [SerializeField] private LogType logType = LogType.NONE;
         [SerializeField] private Mode mode;
         [SerializeField, Range(0, .1f)] private float eventTimer = 0.0f; 
+        [SerializeField] private bool startMute = false;
         [SerializeField] private bool useAbsouluteValue = false;
+        [SerializeField] private bool useSpectrumData;
+        [SerializeField] private float threshhold = 1f; public float Threshhold => threshhold;
         public OnNoteEvent events;
         private const int spectrumAmount = 64;
         private AudioSource source;
-        private float[] data;
+        private float[] data; public float[] GetData() => data;
         private float lastValue, lastDiff;
         private bool didEventThisNote = false;
-        private void Start()
+        private float initialVolume;
+        private void Awake()
         {
             source = GetComponent<AudioSource>();
             data = new float[spectrumAmount];
+            initialVolume = source.volume;
+            if(startMute) Mute();
+        }
+
+        public void Mute(){
+            source.volume = 0.0f;
+        }
+
+        public void UnMute(){
+            source.volume = initialVolume;
         }
 
         public void Play(AudioClip clip, bool loop)
@@ -57,7 +75,8 @@ namespace Plum.Audio
         private float refTimer = 0;
         private void Update()
         {
-            source.GetSpectrumData(data, 0, FFTWindow.Rectangular);
+            if(useSpectrumData) source.GetSpectrumData(data, 0, FFTWindow.Rectangular);
+            else source.GetOutputData(data, 0);
             float v = data[refIndex];
             if (lastValue == 0) lastValue = .1f;
             float compare = 0;
@@ -104,14 +123,15 @@ namespace Plum.Audio
                 refTimer -= Time.deltaTime;
                 return;
             }
-            if(compare > threshhold)
+            if(compare > threshhold * source.volume)
             {
                 if(!didEventThisNote) Event(compare);
                 didEventThisNote = true;
                 if (eventTimer > 0) refTimer = eventTimer;
             }
-            else
+            else if(compare <= backThreshhold * source.volume)
             {
+                if(logType == LogType.ONBACK) Debug.Log(compare);
                 didEventThisNote = false;
             }
         }
@@ -126,5 +146,27 @@ namespace Plum.Audio
             events?.Invoke(input);
         }
     }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(AudiosourceAnalyzed))]
+    [CanEditMultipleObjects]
+    public class SourceInspector : Plum.Base.CustomInspector<AudiosourceAnalyzed>{
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            EditorGUILayout.LabelField("Lower Threshhold");
+            Item.backThreshhold = EditorGUILayout.Slider(Item.backThreshhold, -Mathf.Abs(Item.Threshhold), Mathf.Abs(Item.Threshhold));
+            EditorGUILayout.LabelField("Data Visualization");
+            AnimationCurve curve = new AnimationCurve();
+            float[] data = Item.GetData();
+            if(data == null) return;
+            for (int i = 0; i < data.Length; i++)
+            {
+                curve.AddKey(i, data[i]);
+            }
+            EditorGUILayout.CurveField(curve);
+        }
+    }
+#endif
 }
 
