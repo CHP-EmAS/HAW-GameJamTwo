@@ -12,11 +12,27 @@ namespace Music.UI
     public class DeathScreen : Singleton<DeathScreen>
     {
         [SerializeField] AudioSource RecordScratch;
+        public TMP_Text GameOverLabel;
+        private int highscore;
 
         private void Start()
         {
             gameObject.SetActive(false);
         }
+
+        public void GameOver(int score)
+        {
+            highscore = PlayerPrefs.GetInt("HighScore");
+            if (score > highscore)
+            {
+                GameOverLabel.SetText("new highscore " + score.ToString());
+                PlayerPrefs.SetInt("HighScore", score);
+            } else
+            {
+                GameOverLabel.SetText("game over");
+            }
+        }
+
         public void HoverOverButton(TMP_Text hoverButton)
         {
             hoverButton.fontStyle = FontStyles.Bold;

@@ -62,6 +62,7 @@ namespace Music
         }
         private void SubscribedDeath()
         {
+
             gameObject.SetActive(false);
             if (deathSystem != null)
             {
@@ -72,11 +73,13 @@ namespace Music
             {
                 Plum.Base.TimeManager.PauseGame();
                 Music.UI.DeathScreen.Instance.gameObject.SetActive(true);
+                Music.UI.DeathScreen.Instance.GameOver(Music.UI.ScoreLabel.Instance.score);
             }
             else
             {
                 onEnemyDeath?.Invoke();
                 GameLoop.enemyAmount--;
+                Music.UI.ScoreLabel.Instance.UpdateScore();
             }
             Music.Player.MainCam.RequestShake(1.5f, .3f);
             if(deathSource != null){

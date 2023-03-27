@@ -607,7 +607,7 @@ RectTransform:
   - {fileID: 2250793906934293004}
   - {fileID: 5854161679465581084}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -688,6 +688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc2b8f469a654fb4ab5dcd374af1b3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RecordScratch: {fileID: 2250793906934293007}
+  GameOverLabel: {fileID: 6388552198319528950}
+  score: 0
 --- !u!1 &6388552198319528952
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +727,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 225, y: 50}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6388552198319528949
 CanvasRenderer:
@@ -1126,5 +1129,10 @@ PrefabInstance:
 --- !u!4 &2250793906934293004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8459183361363304681, guid: c4a17abfe60e2d447990532bbb640079, type: 3}
+  m_PrefabInstance: {fileID: 7663265439863718629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2250793906934293007 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8459183361363304682, guid: c4a17abfe60e2d447990532bbb640079, type: 3}
   m_PrefabInstance: {fileID: 7663265439863718629}
   m_PrefabAsset: {fileID: 0}
