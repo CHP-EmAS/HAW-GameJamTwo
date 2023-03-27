@@ -131,18 +131,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1595723850, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
-      propertyPath: logType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1595723850, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
-      propertyPath: threshhold
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1595723850, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
-      propertyPath: backThreshhold
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 969144602645004357, guid: b8e5d1d25947f974da17129bd616b222, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
